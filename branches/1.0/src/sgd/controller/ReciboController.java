@@ -196,6 +196,10 @@ public class ReciboController implements ActionListener {
                     new DiscapacidadController().enviado(reciboDetalle.getArchivoId(), entity);
                     break;
                 }
+                case AUDITORIAMEDICA: {
+                    new AuditoriaMedicaController().enviado(reciboDetalle.getArchivoId(), entity);
+                    break;
+                }
                 default:
                     throw new IllegalArgumentException(SGD.getResources().getString("undefinedsectorimplentation") + ": " + sectorUI);
             }

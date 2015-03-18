@@ -23,6 +23,7 @@ import sgd.gui.panel.BuscadorReciboPanel;
 import sgd.jpa.controller.AfiliacionJPAController;
 import sgd.jpa.controller.ApeJPAController;
 import sgd.jpa.controller.AuditoriaJpaController;
+import sgd.jpa.controller.AuditoriaMedicaJpaController;
 import sgd.jpa.controller.ContableJPAController;
 import sgd.jpa.controller.CronicoJpaController;
 import sgd.jpa.controller.DAO;
@@ -287,6 +288,10 @@ public class SolicitudController implements ActionListener {
                 }
                 case DISCAPACIDAD: {
                     o = new DiscapacidadJpaController().find(archivoId);
+                    break;
+                }
+                case AUDITORIAMEDICA: {
+                    o = new AuditoriaMedicaJpaController().find(archivoId);
                     break;
                 }
                 default: {
