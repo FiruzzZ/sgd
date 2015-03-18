@@ -80,6 +80,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem34 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenuAuditoria = new javax.swing.JMenu();
+        jMenu11 = new javax.swing.JMenu();
         jMenuItem24 = new javax.swing.JMenuItem();
         jMenuItem25 = new javax.swing.JMenuItem();
         jMenuItem38 = new javax.swing.JMenuItem();
@@ -316,13 +317,15 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuAuditoria.setText("Auditoría");
 
+        jMenu11.setText("Auditoría Farmacia");
+
         jMenuItem24.setText("ABM Archivos");
         jMenuItem24.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem24ActionPerformed(evt);
             }
         });
-        jMenuAuditoria.add(jMenuItem24);
+        jMenu11.add(jMenuItem24);
 
         jMenuItem25.setText("Envíos");
         jMenuItem25.addActionListener(new java.awt.event.ActionListener() {
@@ -330,7 +333,7 @@ public class Principal extends javax.swing.JFrame {
                 jMenuItem25ActionPerformed(evt);
             }
         });
-        jMenuAuditoria.add(jMenuItem25);
+        jMenu11.add(jMenuItem25);
 
         jMenuItem38.setText("Solicitud");
         jMenuItem38.addActionListener(new java.awt.event.ActionListener() {
@@ -338,7 +341,7 @@ public class Principal extends javax.swing.JFrame {
                 jMenuItem38ActionPerformed(evt);
             }
         });
-        jMenuAuditoria.add(jMenuItem38);
+        jMenu11.add(jMenuItem38);
 
         jMenuItem26.setText("Recepción");
         jMenuItem26.addActionListener(new java.awt.event.ActionListener() {
@@ -346,9 +349,9 @@ public class Principal extends javax.swing.JFrame {
                 jMenuItem26ActionPerformed(evt);
             }
         });
-        jMenuAuditoria.add(jMenuItem26);
+        jMenu11.add(jMenuItem26);
 
-        jMenuBar1.add(jMenuAuditoria);
+        jMenuAuditoria.add(jMenu11);
 
         jMenuAuditoriaMedica.setText("Audit Médica");
 
@@ -384,7 +387,9 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenuAuditoriaMedica.add(jMenuItem48);
 
-        jMenuBar1.add(jMenuAuditoriaMedica);
+        jMenuAuditoria.add(jMenuAuditoriaMedica);
+
+        jMenuBar1.add(jMenuAuditoria);
 
         jMenu8.setText("Gremiales");
 
@@ -1021,6 +1026,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu10;
+    private javax.swing.JMenu jMenu11;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;

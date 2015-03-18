@@ -383,6 +383,10 @@ public class AuditoriaMedicaController extends ArchivoController implements Acti
             Long nf = Long.valueOf(data.get("afiliado").toString());
             sb.append(" AND o.numeroAfiliado = ").append(nf);
         }
+        
+         if (data.get("observaciones").toString().length() > 0) {
+           sb.append(" AND upper(o.observacion) like '%").append(data.get("observaciones").toString().toUpperCase()).append("%'");
+        }
         Logger.getLogger(this.getClass()).trace(sb.toString());
         return sb.toString();
     }
@@ -425,7 +429,7 @@ public class AuditoriaMedicaController extends ArchivoController implements Acti
         Reportes r = new Reportes(DAO.getJDBCConnection(), SGD.getResources().getString("report.codigobarra"), "Archivo " + o.getClass().getSimpleName() + " N" + o.getBarcode());
         r.addParameter("TABLA", o.getClass().getSimpleName());
         r.addParameter("ID_TABLA", o.getId());
-        r.printReport(true);
+       r.viewReport();
     }
 
     private void btnNuevoAction() {

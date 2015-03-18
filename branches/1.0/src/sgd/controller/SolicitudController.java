@@ -220,7 +220,7 @@ public class SolicitudController implements ActionListener {
         Reportes r = new Reportes(DAO.getJDBCConnection(), "sgd_solicitud_archivos.jasper", "Solicitud N° " + entity.getNumero());
         r.addParameter("ID", entity.getId());
         r.addParameter("TABLA", sectorUI.getNombre());
-        r.printReport(true);
+       r.viewReport();
     }
 
     private void initBuscador() {

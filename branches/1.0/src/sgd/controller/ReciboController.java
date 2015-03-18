@@ -257,7 +257,7 @@ public class ReciboController implements ActionListener {
         Reportes r = new Reportes(DAO.getJDBCConnection(), SGD.getResources().getString("report.recibido"), "Nota de Envío N° " + entity.getNumero());
         r.addParameter("RECIBO_ID", entity.getId());
         r.addParameter("TABLA", sectorUI.getNombre());
-        r.printReport(true);
+       r.viewReport();
     }
 
     private void initBuscador() {
