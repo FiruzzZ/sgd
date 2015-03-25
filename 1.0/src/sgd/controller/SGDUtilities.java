@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import org.apache.log4j.Logger;
 import sgd.SGD;
 import sgd.gui.panel.ABMRecepcionPanel;
 import sgd.gui.panel.ABMReciboPanel;
@@ -38,8 +37,7 @@ public class SGDUtilities {
      *
      * @param wrappedList
      * @param candidate
-     * @return <code>true</code> if {@code candidate} is an element on
-     * {@code wrappedList}
+     * @return <code>true</code> if {@code candidate} is an element on {@code wrappedList}
      */
     static boolean isContained(List<ComboBoxWrapper<UsuarioSector>> wrappedList, Institucion candidate) {
         for (ComboBoxWrapper<UsuarioSector> comboBoxWrapper : wrappedList) {
@@ -69,33 +67,37 @@ public class SGDUtilities {
     }
 
     public static void viewArchivo(Archivo archivo) {
-        JDialog viewArchivo = null;
         SectorUI sectorUI = archivo.getSector().getSectorUI();
-        if (sectorUI.equals(SectorUI.AFILIACION)) {
-            viewArchivo = new AfiliacionController().viewArchivo((Afiliacion) archivo);
-        } else if (sectorUI.equals(SectorUI.APE)) {
-            viewArchivo = new ApeController().viewArchivo((Ape) archivo);
-        } else if (sectorUI.equals(SectorUI.CONTABLE)) {
-            viewArchivo = new ContableController().viewArchivo((Contable) archivo);
-        } else if (sectorUI.equals(SectorUI.PSICOFISICO)) {
-            viewArchivo = new PsicofisicoController().viewArchivo((Psicofisico) archivo);
-        } else if (sectorUI.equals(SectorUI.FACTURACION)) {
-            viewArchivo = new FacturacionController().viewArchivo((Facturacion) archivo);
-        } else if (sectorUI.equals(SectorUI.AUDITORIA)) {
-            viewArchivo = new AuditoriaController().viewArchivo((Auditoria) archivo);
-        } else if (sectorUI.equals(SectorUI.GREMIALES)) {
-            viewArchivo = new GremialesController().viewArchivo((Gremiales) archivo);
-        } else if (sectorUI.equals(SectorUI.CRONICO)) {
-            viewArchivo = new CronicoController().viewArchivo((Cronico) archivo);
-        } else if (sectorUI.equals(SectorUI.DISCAPACIDAD)) {
-            viewArchivo = new DiscapacidadController().viewArchivo((Discapacidad) archivo);
-        } else if (sectorUI.equals(SectorUI.AUDITORIAMEDICA)) {
-            viewArchivo = new AuditoriaMedicaController().viewArchivo((AuditoriaMedica) archivo);
-        } else {
-            throw new IllegalArgumentException(SGD.getResources().getString("undefinedsectorimplementation") + ": " + sectorUI);
-        }
+        JDialog viewArchivo = getArchivoController(sectorUI).viewArchivo(archivo);
         viewArchivo.setLocationRelativeTo(null);
         viewArchivo.setVisible(true);
+    }
+
+    static ArchivoController getArchivoController(SectorUI sectorUI) {
+        switch (sectorUI) {
+            case AFILIACION:
+                return new AfiliacionController();
+            case APE:
+                return new ApeController();
+            case AUDITORIA:
+                return new AuditoriaController();
+            case CONTABLE:
+                return new ContableController();
+            case FACTURACION:
+                return new FacturacionController();
+            case PSICOFISICO:
+                return new PsicofisicoController();
+            case GREMIALES:
+                return new GremialesController();
+            case CRONICO:
+                return new CronicoController();
+            case DISCAPACIDAD:
+                return new DiscapacidadController();
+            case AUDITORIAMEDICA:
+                return new AuditoriaMedicaController();
+            default:
+                throw new IllegalArgumentException(SGD.getResources().getString("undefinedsectorimplentation") + ": " + sectorUI);
+        }
     }
 
     private SGDUtilities() {
@@ -113,8 +115,7 @@ public class SGDUtilities {
     }
 
     /**
-     * Carga una lista con las Instituciones que tiene habilitadas para usar en
-     * el sectorUI indicado
+     * Carga una lista con las Instituciones que tiene habilitadas para usar en el sectorUI indicado
      *
      * @param l donde
      * @param sectorUI
@@ -122,8 +123,8 @@ public class SGDUtilities {
     static void cargarInstitucionesYTipoDocumentoSegunSector(List<ComboBoxWrapper<UsuarioSector>> l,
             List<ComboBoxWrapper<TipoDocumento>> tipoDocumentoList, SectorUI sectorUI) {
         /**
-         * s va ser null si el usuario no tiene ningún permiso de acceso al
-         * sector especificado PD: eso hay que controlar antes de iniciar el ABM
+         * s va ser null si el usuario no tiene ningún permiso de acceso al sector especificado PD:
+         * eso hay que controlar antes de iniciar el ABM
          */
         Sector s = null;
         for (UsuarioSector us : UsuarioController.getCurrentUser().getUsuarioSectores()) {
@@ -240,9 +241,8 @@ public class SGDUtilities {
     }
 
     /**
-     * Se encarga del evento del comboBox de Instituciones. De cargar los
-     * archivos Determina el SectorUI por medio del valor seleccionado del
-     * combobox el cual contiene
+     * Se encarga del evento del comboBox de Instituciones. De cargar los archivos Determina el
+     * SectorUI por medio del valor seleccionado del combobox el cual contiene
      * {@link ComboBoxWrapper}&lt{@link UsuarioSector}> como items
      *
      * @param panel

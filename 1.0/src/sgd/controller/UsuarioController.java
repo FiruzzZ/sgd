@@ -15,7 +15,6 @@ import sgd.controller.exception.MessageException;
 import sgd.gui.*;
 import sgd.gui.panel.ABMUsuariosPanel;
 import sgd.gui.panel.BuscadorUsuarioPanel;
-import sgd.jpa.controller.InstitucionJPAController;
 import sgd.jpa.controller.UsuarioJPAController;
 import sgd.jpa.controller.UsuarioSectorJPAController;
 import sgd.jpa.model.*;

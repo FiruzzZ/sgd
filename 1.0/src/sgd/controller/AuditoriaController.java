@@ -26,7 +26,6 @@ import sgd.gui.panel.BuscadorAuditoriaPanel;
 import sgd.jpa.controller.AuditoriaJpaController;
 import sgd.jpa.controller.DAO;
 import sgd.jpa.controller.UsuarioSectorJPAController;
-import sgd.jpa.model.Archivo;
 import sgd.jpa.model.Auditoria;
 import sgd.jpa.model.AuditoriaDetalle;
 import sgd.jpa.model.AuditoriaPrecinto;
@@ -44,10 +43,9 @@ import utilities.swing.components.ComboBoxWrapper;
  *
  * @author FiruzzZ
  */
-public class AuditoriaController implements ActionListener {
+public class AuditoriaController extends ArchivoController<Auditoria> implements ActionListener {
 
     private CustomABMJDialog abmDialog;
-    private JDBuscador buscador;
     private ABMAuditoriaPanel abmPanel;
     private BuscadorAuditoriaPanel buscadorPanel;
     private Auditoria entity;
@@ -422,7 +420,7 @@ public class AuditoriaController implements ActionListener {
         Reportes r = new Reportes(DAO.getJDBCConnection(), SGD.getResources().getString("report.codigobarra"), "Archivo " + o.getClass().getSimpleName() + " N" + o.getBarcode());
         r.addParameter("TABLA", o.getClass().getSimpleName());
         r.addParameter("ID_TABLA", o.getId());
-       r.viewReport();
+        r.viewReport();
     }
 
     private void btnNuevoAction() {
@@ -522,8 +520,8 @@ public class AuditoriaController implements ActionListener {
         UTIL.loadComboBox(abmPanel.getCbPrestador(), jpaController.findPrestadores(), false);
         AutoCompleteDecorator.decorate(abmPanel.getCbPrestador());
     }
-    
-      Archivo getArchivo(Integer archivoId) {
-       return jpaController.find(archivoId);
+
+    Auditoria find(Integer archivoId) {
+        return jpaController.find(archivoId);
     }
 }

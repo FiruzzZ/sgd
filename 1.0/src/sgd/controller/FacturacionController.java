@@ -26,7 +26,6 @@ import sgd.gui.panel.BuscadorFacturacionPanel;
 import sgd.jpa.controller.DAO;
 import sgd.jpa.controller.FacturacionJpaController;
 import sgd.jpa.controller.UsuarioSectorJPAController;
-import sgd.jpa.model.Archivo;
 import sgd.jpa.model.Facturacion;
 import sgd.jpa.model.FacturacionDetalle;
 import sgd.jpa.model.FacturacionPrecinto;
@@ -43,10 +42,9 @@ import utilities.swing.components.ComboBoxWrapper;
  *
  * @author FiruzzZ
  */
-public class FacturacionController implements ActionListener {
+public class FacturacionController extends ArchivoController<Facturacion> implements ActionListener {
 
     private CustomABMJDialog customABMJDialog;
-    private JDBuscador buscador;
     private ABMFacturacionPanel abmPanel;
     private BuscadorFacturacionPanel buscadorPanel;
     private Facturacion entity;
@@ -437,7 +435,7 @@ public class FacturacionController implements ActionListener {
         Reportes r = new Reportes(DAO.getJDBCConnection(), SGD.getResources().getString("report.codigobarra"), "Archivo " + o.getClass().getSimpleName() + " N" + o.getBarcode());
         r.addParameter("TABLA", o.getClass().getSimpleName());
         r.addParameter("ID_TABLA", o.getId());
-       r.viewReport();
+        r.viewReport();
     }
 
     private void btnNuevoAction() {
@@ -535,9 +533,8 @@ public class FacturacionController implements ActionListener {
     private void loadPrestadores() {
         AutoCompleteDecorator.decorate(abmPanel.getTfPrestador(), jpaController.findPrestadores(), false);
     }
-    
 
-    Archivo getArchivo(Integer archivoId) {
-       return jpaController.find(archivoId);
+    Facturacion find(Integer archivoId) {
+        return jpaController.find(archivoId);
     }
 }

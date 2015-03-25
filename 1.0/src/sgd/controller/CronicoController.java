@@ -25,7 +25,6 @@ import sgd.gui.panel.BuscadorCronicoPanel;
 import sgd.jpa.controller.CronicoJpaController;
 import sgd.jpa.controller.DAO;
 import sgd.jpa.controller.UsuarioSectorJPAController;
-import sgd.jpa.model.Archivo;
 import sgd.jpa.model.Cronico;
 import sgd.jpa.model.CronicoDetalle;
 import sgd.jpa.model.CronicoDetalle_;
@@ -43,10 +42,9 @@ import utilities.swing.components.ComboBoxWrapper;
  *
  * @author FiruzzZ
  */
-public class CronicoController implements ActionListener {
+public class CronicoController extends ArchivoController<Cronico> implements ActionListener {
 
     private CustomABMJDialog customABMJDialog;
-    private JDBuscador buscador;
     private ABMCronicoPanel abmPanel;
     private BuscadorCronicoPanel buscadorPanel;
     private Cronico entity;
@@ -472,7 +470,7 @@ public class CronicoController implements ActionListener {
         Reportes r = new Reportes(DAO.getJDBCConnection(), SGD.getResources().getString("report.codigobarra"), "Archivo " + o.getClass().getSimpleName() + " N" + o.getBarcode());
         r.addParameter("TABLA", o.getClass().getSimpleName());
         r.addParameter("ID_TABLA", o.getId());
-       r.viewReport();
+        r.viewReport();
     }
 
     private void btnNuevoAction() {
@@ -561,8 +559,8 @@ public class CronicoController implements ActionListener {
         }
         return orderIndex + 1;
     }
-    
-      Archivo getArchivo(Integer archivoId) {
-       return jpaController.find(archivoId);
+
+    Cronico find(Integer archivoId) {
+        return jpaController.find(archivoId);
     }
 }

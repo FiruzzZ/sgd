@@ -2,7 +2,6 @@ package sgd.jpa.model;
 
 import java.util.Date;
 import java.util.List;
-import javax.persistence.*;
 
 /**
  *
@@ -10,27 +9,9 @@ import javax.persistence.*;
  */
 //@MappedSuperclass
 //@Inheritance(strategy = InheritanceType.JOINED)
+@SuppressWarnings("ClassMayBeInterface")
 public abstract class Archivo {
 
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    protected Integer id;
-//    @ManyToOne(optional = false)
-//    protected Institucion institucion;
-//    @ManyToOne(optional = false)
-//    protected Sector sector;
-//    @Basic(optional = false)
-//    @Column(nullable = false)
-//    protected Integer codigo;
-//    @ManyToOne(optional = false)
-//    protected Usuario usuario;
-//    protected boolean baja;
-//    @Column(length = 200)
-//    protected String observacion;
-//    @Basic(optional = false)
-//    @Column(insertable = false, updatable = false, nullable = false, columnDefinition = "timestamp with time zone NOT NULL DEFAULT now()")
-//    @Temporal(TemporalType.TIMESTAMP)
-//    protected Date creation;
     public abstract Integer getId();
 
     public abstract void setId(Integer id);
@@ -60,4 +41,6 @@ public abstract class Archivo {
     public abstract void setRecibo(Recibo recibo);
 
     public abstract Recibo getRecibo();
+    
+    public abstract List<?> getDetalle();
 }

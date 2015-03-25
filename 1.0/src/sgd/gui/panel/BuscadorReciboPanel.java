@@ -5,9 +5,7 @@
  */
 package sgd.gui.panel;
 
-import com.toedter.calendar.JDateChooser;
 import java.util.Date;
-import javax.swing.JTextField;
 
 /**
  *

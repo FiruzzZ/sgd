@@ -9,11 +9,8 @@ import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import net.sf.jasperreports.engine.JRException;
 import org.apache.log4j.Logger;
 import sgd.SGD;
@@ -32,10 +29,9 @@ import utilities.swing.components.ComboBoxWrapper;
  *
  * @author FiruzzZ
  */
-public class ContableController implements ActionListener {
+public class ContableController extends ArchivoController<Contable> implements ActionListener {
 
     private CustomABMJDialog customABMJDialog;
-    private JDBuscador buscador;
     private ABMContablePanel abmPanel;
     private BuscadorContablePanel buscadorPanel;
     private Contable entity;
@@ -388,7 +384,7 @@ public class ContableController implements ActionListener {
         Reportes r = new Reportes(DAO.getJDBCConnection(), SGD.getResources().getString("report.codigobarra"), "Archivo " + o.getClass().getSimpleName() + " N" + o.getBarcode());
         r.addParameter("TABLA", o.getClass().getSimpleName());
         r.addParameter("ID_TABLA", o.getId());
-       r.viewReport();
+        r.viewReport();
     }
 
     private void removePrecintos(Contable entity) {
@@ -396,17 +392,17 @@ public class ContableController implements ActionListener {
         entity.setPrecintos(null);
     }
 
-    JDialog viewArchivo(Contable instance) {
+    CustomABMJDialog viewArchivo(Contable instance) {
         abmPanel = new ABMContablePanel();
         UTIL.hideColumnTable(abmPanel.getjTable1(), 0);
         UTIL.hideColumnTable(abmPanel.getjTable1(), abmPanel.getjTable1().getColumnCount() - 1);
         abmPanel.getCbInstitucion().addItem(instance.getInstitucion().getNombre());
         setPanelABM(instance);
-        customABMJDialog = new CustomABMJDialog((JDialog) null, abmPanel, "Archivo " + instance.getClass().getSimpleName() + " " + instance.getBarcode(), true, null);
-        customABMJDialog.setToolBarVisible(false);
-        customABMJDialog.setBottomButtonsVisible(false);
-        customABMJDialog.setPanelComponentsEnabled(false);
-        return customABMJDialog;
+        CustomABMJDialog customABMJDial = new CustomABMJDialog(null, abmPanel, "Archivo " + instance.getClass().getSimpleName() + " " + instance.getBarcode(), true, null);
+        customABMJDial.setToolBarVisible(false);
+        customABMJDial.setBottomButtonsVisible(false);
+        customABMJDial.setPanelComponentsEnabled(false);
+        return customABMJDial;
     }
 
     private void crearArchivo(boolean cerrarYPrecintar) {
@@ -459,8 +455,8 @@ public class ContableController implements ActionListener {
         o.setRecibo(null);
         jPAController.merge(o);
     }
-    
-      Archivo getArchivo(Integer archivoId) {
-       return jPAController.find(archivoId);
+
+    Contable find(Integer archivoId) {
+        return jPAController.find(archivoId);
     }
 }

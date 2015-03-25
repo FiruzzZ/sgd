@@ -3,7 +3,6 @@ package sgd.jpa.controller;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -11,8 +10,6 @@ import sgd.jpa.model.Facturacion;
 import sgd.jpa.model.FacturacionDetalle;
 import sgd.jpa.model.FacturacionDetalle_;
 import sgd.jpa.model.FacturacionPrecinto;
-import sgd.jpa.model.Facturacion_;
-import sgd.jpa.model.Institucion;
 import sgd.jpa.model.SubTipoDocumento;
 import sgd.jpa.model.TipoDocumento;
 

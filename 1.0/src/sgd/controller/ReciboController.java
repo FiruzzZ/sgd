@@ -159,99 +159,13 @@ public class ReciboController implements ActionListener {
 
     private void updateArchivosEnviados() {
         for (ReciboDetalle reciboDetalle : entity.getDetalle()) {
-            switch (sectorUI) {
-                case AFILIACION: {
-                    new AfiliacionController().enviado(reciboDetalle.getArchivoId(), entity);
-                    break;
-                }
-                case APE: {
-                    new ApeController().enviado(reciboDetalle.getArchivoId(), entity);
-                    break;
-                }
-                case AUDITORIA: {
-                    new AuditoriaController().enviado(reciboDetalle.getArchivoId(), entity);
-                    break;
-                }
-                case CONTABLE: {
-                    new ContableController().enviado(reciboDetalle.getArchivoId(), entity);
-                    break;
-                }
-                case FACTURACION: {
-                    new FacturacionController().enviado(reciboDetalle.getArchivoId(), entity);
-                    break;
-                }
-                case PSICOFISICO: {
-                    new PsicofisicoController().enviado(reciboDetalle.getArchivoId(), entity);
-                    break;
-                }
-                case GREMIALES: {
-                    new GremialesController().enviado(reciboDetalle.getArchivoId(), entity);
-                    break;
-                }
-                case CRONICO: {
-                    new CronicoController().enviado(reciboDetalle.getArchivoId(), entity);
-                    break;
-                }
-                case DISCAPACIDAD: {
-                    new DiscapacidadController().enviado(reciboDetalle.getArchivoId(), entity);
-                    break;
-                }
-                case AUDITORIAMEDICA: {
-                    new AuditoriaMedicaController().enviado(reciboDetalle.getArchivoId(), entity);
-                    break;
-                }
-                default:
-                    throw new IllegalArgumentException(SGD.getResources().getString("undefinedsectorimplentation") + ": " + sectorUI);
-            }
+            SGDUtilities.getArchivoController(sectorUI).enviado(reciboDetalle.getArchivoId(), entity);
         }
     }
 
     private Archivo getArchivo(Integer archivoId) {
-        Archivo archivo = null;
-        switch (sectorUI) {
-            case AFILIACION: {
-                archivo = new AfiliacionController().getArchivo(archivoId);
-                break;
-            }
-            case APE: {
-                archivo = new ApeController().getArchivo(archivoId);
-                break;
-            }
-            case AUDITORIA: {
-                archivo = new AuditoriaController().getArchivo(archivoId);
-                break;
-            }
-            case CONTABLE: {
-                archivo = new ContableController().getArchivo(archivoId);
-                break;
-            }
-            case FACTURACION: {
-                archivo = new FacturacionController().getArchivo(archivoId);
-                break;
-            }
-            case PSICOFISICO: {
-                archivo = new PsicofisicoController().getArchivo(archivoId);
-                break;
-            }
-            case GREMIALES: {
-                archivo = new GremialesController().getArchivo(archivoId);
-                break;
-            }
-            case CRONICO: {
-                archivo = new CronicoController().getArchivo(archivoId);
-                break;
-            }
-            case DISCAPACIDAD: {
-                archivo = new DiscapacidadController().getArchivo(archivoId);
-                break;
-            }
-            case AUDITORIAMEDICA: {
-                archivo = new AuditoriaMedicaController().getArchivo(archivoId);
-                break;
-            }
-            default:
-                throw new IllegalArgumentException(SGD.getResources().getString("undefinedsectorimplentation") + ": " + sectorUI);
-        }
+        Archivo archivo = SGDUtilities.getArchivoController(sectorUI).find(archivoId);
+
         return archivo;
     }
 

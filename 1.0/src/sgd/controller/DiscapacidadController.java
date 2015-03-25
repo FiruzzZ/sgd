@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import net.sf.jasperreports.engine.JRException;
@@ -27,7 +26,6 @@ import sgd.gui.panel.BuscadorDiscapacidadPanel;
 import sgd.jpa.controller.DAO;
 import sgd.jpa.controller.DiscapacidadJpaController;
 import sgd.jpa.controller.UsuarioSectorJPAController;
-import sgd.jpa.model.Archivo;
 import sgd.jpa.model.Discapacidad;
 import sgd.jpa.model.DiscapacidadDetalle;
 import sgd.jpa.model.DiscapacidadDetalle_;
@@ -46,10 +44,9 @@ import utilities.swing.components.ComboBoxWrapper;
  *
  * @author FiruzzZ
  */
-public class DiscapacidadController implements ActionListener {
+public class DiscapacidadController extends ArchivoController<Discapacidad> implements ActionListener {
 
     private CustomABMJDialog customABMJDialog;
-    private JDBuscador buscador;
     private ABMDiscapacidadPanel abmPanel;
     private BuscadorDiscapacidadPanel buscadorPanel;
     private Discapacidad entity;
@@ -463,7 +460,7 @@ public class DiscapacidadController implements ActionListener {
         Reportes r = new Reportes(DAO.getJDBCConnection(), SGD.getResources().getString("report.codigobarra"), "Archivo " + o.getClass().getSimpleName() + " N" + o.getBarcode());
         r.addParameter("TABLA", o.getClass().getSimpleName());
         r.addParameter("ID_TABLA", o.getId());
-       r.viewReport();
+        r.viewReport();
     }
 
     private void btnNuevoAction() {
@@ -528,8 +525,8 @@ public class DiscapacidadController implements ActionListener {
         o.setRecibo(null);
         jpaController.merge(o);
     }
-    
-      Archivo getArchivo(Integer archivoId) {
-       return jpaController.find(archivoId);
+
+    Discapacidad find(Integer archivoId) {
+        return jpaController.find(archivoId);
     }
 }
