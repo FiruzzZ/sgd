@@ -502,4 +502,9 @@ public class PsicofisicoController implements ActionListener {
         o.setRecibo(null);
         jpaController.merge(o);
     }
+    
+ 
+    Archivo getArchivo(Integer archivoId) {
+       return jpaController.find(archivoId);
+    }
 }
