@@ -223,11 +223,13 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenuAuditoria">
           <Properties>
+            <Property name="mnemonic" type="int" value="111"/>
             <Property name="text" type="java.lang.String" value="Auditor&#xed;a"/>
           </Properties>
           <SubComponents>
             <Menu class="javax.swing.JMenu" name="jMenu11">
               <Properties>
+                <Property name="mnemonic" type="int" value="102"/>
                 <Property name="text" type="java.lang.String" value="Auditor&#xed;a Farmacia"/>
               </Properties>
               <SubComponents>
@@ -267,7 +269,8 @@
             </Menu>
             <Menu class="javax.swing.JMenu" name="jMenuAuditoriaMedica">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Audit M&#xe9;dica"/>
+                <Property name="mnemonic" type="int" value="109"/>
+                <Property name="text" type="java.lang.String" value="Auditor&#xed;a M&#xe9;dica"/>
               </Properties>
               <SubComponents>
                 <MenuItem class="javax.swing.JMenuItem" name="jMenuItem45">

@@ -1,5 +1,6 @@
 package sgd.controller;
 
+import sgd.jpa.model.Archivo;
 import sgd.jpa.model.Recibo;
 
 /**
@@ -14,4 +15,6 @@ public abstract class ArchivoController {
     }
 
     abstract void enviado(Integer archivoId, Recibo recibo);
+    
+    abstract Archivo getArchivo(Integer archivoId);
 }

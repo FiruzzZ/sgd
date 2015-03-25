@@ -459,4 +459,8 @@ public class ContableController implements ActionListener {
         o.setRecibo(null);
         jPAController.merge(o);
     }
+    
+      Archivo getArchivo(Integer archivoId) {
+       return jPAController.find(archivoId);
+    }
 }

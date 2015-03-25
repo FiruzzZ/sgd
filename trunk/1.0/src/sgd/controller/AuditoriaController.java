@@ -26,6 +26,7 @@ import sgd.gui.panel.BuscadorAuditoriaPanel;
 import sgd.jpa.controller.AuditoriaJpaController;
 import sgd.jpa.controller.DAO;
 import sgd.jpa.controller.UsuarioSectorJPAController;
+import sgd.jpa.model.Archivo;
 import sgd.jpa.model.Auditoria;
 import sgd.jpa.model.AuditoriaDetalle;
 import sgd.jpa.model.AuditoriaPrecinto;
@@ -520,5 +521,9 @@ public class AuditoriaController implements ActionListener {
     private void loadPrestadores() {
         UTIL.loadComboBox(abmPanel.getCbPrestador(), jpaController.findPrestadores(), false);
         AutoCompleteDecorator.decorate(abmPanel.getCbPrestador());
+    }
+    
+      Archivo getArchivo(Integer archivoId) {
+       return jpaController.find(archivoId);
     }
 }

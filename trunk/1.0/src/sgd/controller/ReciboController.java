@@ -206,6 +206,55 @@ public class ReciboController implements ActionListener {
         }
     }
 
+    private Archivo getArchivo(Integer archivoId) {
+        Archivo archivo = null;
+        switch (sectorUI) {
+            case AFILIACION: {
+                archivo = new AfiliacionController().getArchivo(archivoId);
+                break;
+            }
+            case APE: {
+                archivo = new ApeController().getArchivo(archivoId);
+                break;
+            }
+            case AUDITORIA: {
+                archivo = new AuditoriaController().getArchivo(archivoId);
+                break;
+            }
+            case CONTABLE: {
+                archivo = new ContableController().getArchivo(archivoId);
+                break;
+            }
+            case FACTURACION: {
+                archivo = new FacturacionController().getArchivo(archivoId);
+                break;
+            }
+            case PSICOFISICO: {
+                archivo = new PsicofisicoController().getArchivo(archivoId);
+                break;
+            }
+            case GREMIALES: {
+                archivo = new GremialesController().getArchivo(archivoId);
+                break;
+            }
+            case CRONICO: {
+                archivo = new CronicoController().getArchivo(archivoId);
+                break;
+            }
+            case DISCAPACIDAD: {
+                archivo = new DiscapacidadController().getArchivo(archivoId);
+                break;
+            }
+            case AUDITORIAMEDICA: {
+                archivo = new AuditoriaMedicaController().getArchivo(archivoId);
+                break;
+            }
+            default:
+                throw new IllegalArgumentException(SGD.getResources().getString("undefinedsectorimplentation") + ": " + sectorUI);
+        }
+        return archivo;
+    }
+
     private ReciboDetalle getDetalle(int selectedRow) throws MessageException {
         DefaultTableModel dtm = (DefaultTableModel) abmPanel.getjTableBuscador().getModel();
         Archivo o = (Archivo) dtm.getValueAt(selectedRow, 0);
@@ -257,7 +306,7 @@ public class ReciboController implements ActionListener {
         Reportes r = new Reportes(DAO.getJDBCConnection(), SGD.getResources().getString("report.recibido"), "Nota de Envío N° " + entity.getNumero());
         r.addParameter("RECIBO_ID", entity.getId());
         r.addParameter("TABLA", sectorUI.getNombre());
-       r.viewReport();
+        r.viewReport();
     }
 
     private void initBuscador() {
@@ -289,6 +338,12 @@ public class ReciboController implements ActionListener {
         abmPanel.getTfNumero().setText(entity.getNumero().toString());
         for (ReciboDetalle reciboDetalle : entity.getDetalle()) {
             reciboDetalle.getArchivoId();
+            Archivo arch = getArchivo(reciboDetalle.getArchivoId());
+            String precintos = "";
+            if (arch != null) {
+                precintos = SGDUtilities.precintosToString(arch.getPrecintos());
+            }
+            cargarTablaDetalle(reciboDetalle, precintos);
 
         }
     }

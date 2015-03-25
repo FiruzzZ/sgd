@@ -315,8 +315,10 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu6);
 
+        jMenuAuditoria.setMnemonic('o');
         jMenuAuditoria.setText("Auditoría");
 
+        jMenu11.setMnemonic('f');
         jMenu11.setText("Auditoría Farmacia");
 
         jMenuItem24.setText("ABM Archivos");
@@ -353,7 +355,8 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuAuditoria.add(jMenu11);
 
-        jMenuAuditoriaMedica.setText("Audit Médica");
+        jMenuAuditoriaMedica.setMnemonic('m');
+        jMenuAuditoriaMedica.setText("Auditoría Médica");
 
         jMenuItem45.setText("ABM Archivos");
         jMenuItem45.addActionListener(new java.awt.event.ActionListener() {

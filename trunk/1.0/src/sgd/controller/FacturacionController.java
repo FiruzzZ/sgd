@@ -26,6 +26,7 @@ import sgd.gui.panel.BuscadorFacturacionPanel;
 import sgd.jpa.controller.DAO;
 import sgd.jpa.controller.FacturacionJpaController;
 import sgd.jpa.controller.UsuarioSectorJPAController;
+import sgd.jpa.model.Archivo;
 import sgd.jpa.model.Facturacion;
 import sgd.jpa.model.FacturacionDetalle;
 import sgd.jpa.model.FacturacionPrecinto;
@@ -533,5 +534,10 @@ public class FacturacionController implements ActionListener {
      */
     private void loadPrestadores() {
         AutoCompleteDecorator.decorate(abmPanel.getTfPrestador(), jpaController.findPrestadores(), false);
+    }
+    
+
+    Archivo getArchivo(Integer archivoId) {
+       return jpaController.find(archivoId);
     }
 }
