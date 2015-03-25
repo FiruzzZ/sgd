@@ -421,7 +421,7 @@ public class AuditoriaController implements ActionListener {
         Reportes r = new Reportes(DAO.getJDBCConnection(), SGD.getResources().getString("report.codigobarra"), "Archivo " + o.getClass().getSimpleName() + " N" + o.getBarcode());
         r.addParameter("TABLA", o.getClass().getSimpleName());
         r.addParameter("ID_TABLA", o.getId());
-        r.printReport(true);
+       r.viewReport();
     }
 
     private void btnNuevoAction() {

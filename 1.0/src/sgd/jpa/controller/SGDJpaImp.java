@@ -6,6 +6,10 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import sgd.controller.SGDUtilities;
 import sgd.jpa.model.Archivo;
@@ -26,7 +30,8 @@ public abstract class SGDJpaImp<T extends Archivo, ID extends Serializable> exte
 
     /**
      * Para cuando se necesita mantener el contexto de persistencia abierto.
-     * <br>Ej: recuperar objectos en LAZY load; manipular varios JPAControllers simultaneamente;
+     * <br>Ej: recuperar objectos en LAZY load; manipular varios JPAControllers
+     * simultaneamente;
      */
     private boolean keepSessionClosed = true;
 
@@ -62,7 +67,8 @@ public abstract class SGDJpaImp<T extends Archivo, ID extends Serializable> exte
     }
 
     /**
-     * Recupera los archivos de la institución que estén relacionados a un {@link Recibo} (de envío)
+     * Recupera los archivos de la institución que estén relacionados a un
+     * {@link Recibo} (de envío)
      *
      * @param institucion cannot be null
      * @return
@@ -82,14 +88,24 @@ public abstract class SGDJpaImp<T extends Archivo, ID extends Serializable> exte
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<T> query = cb.createQuery(getEntityClass());
         Root<T> from = query.from(getEntityClass());
+        //creo Path para coleccion de precintos y genero Expression cajaCerrada donde not isEmpty = Cerrada (con precintos) -> isEmpty = Abierta (sin precintos)
+        Path<List<Precinto>> precintosPath = from.get("precintos");
+        Predicate cajaCerrada;
+        if (cerrada) {
+           cajaCerrada = cb.isNotEmpty(precintosPath);
+        } else {
+            cajaCerrada =cb.isEmpty(precintosPath);
+        }
+
         query.select(from).
                 where(cb.and(cb.equal(from.get("institucion"), institucion),
-                                cb.equal(from.get("cerrada"), cerrada)));
+                                cajaCerrada));
         return getEntityManager().createQuery(query).getResultList();
     }
 
     /**
-     * Recupera los archivos del sector cerrados pero NO relacionados a un {@link Recibo}.
+     * Recupera los archivos del sector cerrados pero NO relacionados a un
+     * {@link Recibo}.
      *
      * @param institucion
      * @return

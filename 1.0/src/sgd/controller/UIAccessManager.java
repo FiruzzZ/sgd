@@ -149,6 +149,10 @@ public class UIAccessManager {
     public JDialog getABMEnviosAuditoria(Window owner) throws UnauthorizedModuleAccessException {
         return getABMEnvios(owner, SectorUI.AUDITORIA);
     }
+    
+    public JDialog getABMEnviosAuditoriaMedica(Window owner) throws UnauthorizedModuleAccessException {
+        return getABMEnvios(owner, SectorUI.AUDITORIAMEDICA);
+    }
 
     public JDialog getABMEnviosFacturacion(Window owner) throws UnauthorizedModuleAccessException {
         return getABMEnvios(owner, SectorUI.FACTURACION);
@@ -193,6 +197,13 @@ public class UIAccessManager {
         setUISegunPermiso(jd, permiso);
         return jd;
     }
+    
+     public JDialog getABMAuditoriaMedica(Window owner) throws UnauthorizedModuleAccessException, MessageException {
+        int permiso = checkPermiso(SectorUI.AUDITORIAMEDICA);
+        CustomABMJDialog jd = new AuditoriaMedicaController().getAbm(owner);
+        setUISegunPermiso(jd, permiso);
+        return jd;
+    }
 
     public JDialog getABMGremiales(Window owner) throws UnauthorizedModuleAccessException, MessageException {
         int permiso = checkPermiso(SectorUI.GREMIALES);
@@ -211,6 +222,10 @@ public class UIAccessManager {
 
     public JDialog getABMRecepcionAuditoria(Window owner) throws UnauthorizedModuleAccessException {
         return getABMRecepcion(owner, SectorUI.AUDITORIA);
+    }
+    
+    public JDialog getABMRecepcionAuditoriaMedica(Window owner) throws UnauthorizedModuleAccessException {
+        return getABMRecepcion(owner, SectorUI.AUDITORIAMEDICA);
     }
 
     public JDialog getABMRecepcionContable(Window owner) throws UnauthorizedModuleAccessException {
@@ -239,6 +254,10 @@ public class UIAccessManager {
 
     public JDialog getABMSolicitudAuditoria(Window owner) throws UnauthorizedModuleAccessException {
         return getABMSolicitud(owner, SectorUI.AUDITORIA);
+    }
+    
+     public JDialog getABMSolicitudAuditoriaMedica(Window owner) throws UnauthorizedModuleAccessException {
+        return getABMSolicitud(owner, SectorUI.AUDITORIAMEDICA);
     }
 
     public JDialog getABMSolicitudContable(Window owner) throws UnauthorizedModuleAccessException {

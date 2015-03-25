@@ -1,53 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
-  <persistence-unit name="SGDPU" transaction-type="RESOURCE_LOCAL">
-    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    <class>sgd.jpa.model.Institucion</class>
-    <class>sgd.jpa.model.Sector</class>
-    <class>sgd.jpa.model.TipoDocumento</class>
-    <class>sgd.jpa.model.SubTipoDocumento</class>
-    <class>sgd.jpa.model.Usuario</class>
-    <class>sgd.jpa.model.UsuarioSector</class>
-    <class>sgd.jpa.model.Afiliacion</class>
-    <class>sgd.jpa.model.AfiliacionDetalle</class>
-    <class>sgd.jpa.model.Ape</class>
-    <class>sgd.jpa.model.ApeDetalle</class>
-    <class>sgd.jpa.model.Contable</class>
-    <class>sgd.jpa.model.ContableDetalle</class>
-    <class>sgd.jpa.model.Recibo</class>
-    <class>sgd.jpa.model.ReciboDetalle</class>
-    <class>sgd.jpa.model.Psicofisico</class>
-    <class>sgd.jpa.model.PsicofisicoDetalle</class>
-    <class>sgd.jpa.model.Precinto</class>
-    <class>sgd.jpa.model.ApePrecinto</class>
-    <class>sgd.jpa.model.AfiliacionPrecinto</class>
-    <class>sgd.jpa.model.ContablePrecinto</class>
-    <class>sgd.jpa.model.PsicofisicoPrecinto</class>
-    <class>sgd.jpa.model.Recepcion</class>
-    <class>sgd.jpa.model.RecepcionDetalle</class>
-    <class>sgd.jpa.model.Facturacion</class>
-    <class>sgd.jpa.model.FacturacionDetalle</class>
-    <class>sgd.jpa.model.FacturacionPrecinto</class>
-    <class>sgd.jpa.model.Auditoria</class>
-    <class>sgd.jpa.model.AuditoriaDetalle</class>
-    <class>sgd.jpa.model.AuditoriaPrecinto</class>
-    <class>sgd.jpa.model.Gremiales</class>
-    <class>sgd.jpa.model.GremialesDetalle</class>
-    <class>sgd.jpa.model.GremialesPrecinto</class>
-    <class>sgd.jpa.model.Cronico</class>
-    <class>sgd.jpa.model.CronicoDetalle</class>
-    <class>sgd.jpa.model.CronicoPrecinto</class>
-    <class>sgd.jpa.model.SolicitudDetalle</class>
-    <class>sgd.jpa.model.Solicitud</class>
-    <class>sgd.jpa.model.Discapacidad</class>
-    <class>sgd.jpa.model.DiscapacidadDetalle</class>
-    <class>sgd.jpa.model.DiscapacidadPrecinto</class>
-    <properties>
+    <persistence-unit name="SGDPU" transaction-type="RESOURCE_LOCAL">
+        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+        <class>sgd.jpa.model.Institucion</class>
+        <class>sgd.jpa.model.Sector</class>
+        <class>sgd.jpa.model.TipoDocumento</class>
+        <class>sgd.jpa.model.SubTipoDocumento</class>
+        <class>sgd.jpa.model.Usuario</class>
+        <class>sgd.jpa.model.UsuarioSector</class>
+        <class>sgd.jpa.model.Afiliacion</class>
+        <class>sgd.jpa.model.AfiliacionDetalle</class>
+        <class>sgd.jpa.model.Ape</class>
+        <class>sgd.jpa.model.ApeDetalle</class>
+        <class>sgd.jpa.model.Contable</class>
+        <class>sgd.jpa.model.ContableDetalle</class>
+        <class>sgd.jpa.model.Recibo</class>
+        <class>sgd.jpa.model.ReciboDetalle</class>
+        <class>sgd.jpa.model.Psicofisico</class>
+        <class>sgd.jpa.model.PsicofisicoDetalle</class>
+        <class>sgd.jpa.model.Precinto</class>
+        <class>sgd.jpa.model.ApePrecinto</class>
+        <class>sgd.jpa.model.AfiliacionPrecinto</class>
+        <class>sgd.jpa.model.ContablePrecinto</class>
+        <class>sgd.jpa.model.PsicofisicoPrecinto</class>
+        <class>sgd.jpa.model.Recepcion</class>
+        <class>sgd.jpa.model.RecepcionDetalle</class>
+        <class>sgd.jpa.model.Facturacion</class>
+        <class>sgd.jpa.model.FacturacionDetalle</class>
+        <class>sgd.jpa.model.FacturacionPrecinto</class>
+        <class>sgd.jpa.model.Auditoria</class>
+        <class>sgd.jpa.model.AuditoriaDetalle</class>
+        <class>sgd.jpa.model.AuditoriaPrecinto</class>
+        <class>sgd.jpa.model.Gremiales</class>
+        <class>sgd.jpa.model.GremialesDetalle</class>
+        <class>sgd.jpa.model.GremialesPrecinto</class>
+        <class>sgd.jpa.model.Cronico</class>
+        <class>sgd.jpa.model.CronicoDetalle</class>
+        <class>sgd.jpa.model.CronicoPrecinto</class>
+        <class>sgd.jpa.model.SolicitudDetalle</class>
+        <class>sgd.jpa.model.Solicitud</class>
+        <class>sgd.jpa.model.Discapacidad</class>
+        <class>sgd.jpa.model.DiscapacidadDetalle</class>
+        <class>sgd.jpa.model.DiscapacidadPrecinto</class>
+        <class>sgd.jpa.model.AuditoriaMedica</class>
+        <class>sgd.jpa.model.AuditoriaMedicaDetalle</class>
+        <class>sgd.jpa.model.AuditoriaMedicaPrecinto</class>
+        <properties>
       <property name="javax.persistence.jdbc.password" value="cualquiera"/>
-      <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+            <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
       <property name="javax.persistence.jdbc.user" value="sgd"/>
-      <!--logging level = FINE to see SQL generated-->
-      <property name="eclipselink.logging.level" value="INFO"/>
-    </properties>
-  </persistence-unit>
+            <!--logging level = FINE to see SQL generated-->
+            <property name="eclipselink.logging.level" value="INFO"/>
+        </properties>
+    </persistence-unit>
 </persistence>
