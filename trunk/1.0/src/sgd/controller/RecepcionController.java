@@ -1,6 +1,5 @@
 package sgd.controller;
 
-import controller.exceptions.MissingReportException;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,26 +8,14 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import net.sf.jasperreports.engine.JRException;
 import org.apache.log4j.Logger;
 import sgd.SGD;
 import sgd.controller.exception.MessageException;
 import sgd.gui.JDBuscador;
 import sgd.gui.panel.ABMRecepcionPanel;
 import sgd.gui.panel.BuscadorReciboPanel;
-import sgd.jpa.controller.AfiliacionJPAController;
-import sgd.jpa.controller.ApeJPAController;
-import sgd.jpa.controller.AuditoriaJpaController;
-import sgd.jpa.controller.AuditoriaMedicaJpaController;
-import sgd.jpa.controller.ContableJPAController;
-import sgd.jpa.controller.CronicoJpaController;
-import sgd.jpa.controller.DiscapacidadJpaController;
-import sgd.jpa.controller.FacturacionJpaController;
-import sgd.jpa.controller.GremialesJpaController;
-import sgd.jpa.controller.PsicofisicoJPAController;
 import sgd.jpa.controller.RecepcionJPAController;
 import sgd.jpa.model.*;
 import utilities.general.UTIL;
@@ -92,7 +79,6 @@ public class RecepcionController implements ActionListener {
                         System.out.println(entity.toString());
                         persistEntity();
                         customABMJDialog.showMessage(msj, null, 1);
-                        doReport(entity);
                         customABMJDialog.setPanelComponentsEnabled(false);
                         abmPanel.resetUI(true);
                         entity = null;
@@ -169,29 +155,7 @@ public class RecepcionController implements ActionListener {
             jpaController.create(entity);
         }
         for (RecepcionDetalle recepcionDetalle : entity.getDetalle()) {
-            if (sectorUI.equals(SectorUI.AFILIACION)) {
-                new AfiliacionController().recepcionar(recepcionDetalle.getArchivoId());
-            } else if (sectorUI.equals(SectorUI.APE)) {
-                new ApeController().recepcionar(recepcionDetalle.getArchivoId());
-            } else if (sectorUI.equals(SectorUI.CONTABLE)) {
-                new ContableController().recepcionar(recepcionDetalle.getArchivoId());
-            } else if (sectorUI.equals(SectorUI.PSICOFISICO)) {
-                new PsicofisicoController().recepcionar(recepcionDetalle.getArchivoId());
-            } else if (sectorUI.equals(SectorUI.FACTURACION)) {
-                new FacturacionController().recepcionar(recepcionDetalle.getArchivoId());
-            } else if (sectorUI.equals(SectorUI.AUDITORIA)) {
-                new AuditoriaController().recepcionar(recepcionDetalle.getArchivoId());
-            } else if (sectorUI.equals(SectorUI.GREMIALES)) {
-                new GremialesController().recepcionar(recepcionDetalle.getArchivoId());
-            } else if (sectorUI.equals(SectorUI.CRONICO)) {
-                new CronicoController().recepcionar(recepcionDetalle.getArchivoId());
-            } else if (sectorUI.equals(SectorUI.DISCAPACIDAD)) {
-                new DiscapacidadController().recepcionar(recepcionDetalle.getArchivoId());
-            } else if (sectorUI.equals(SectorUI.AUDITORIAMEDICA)) {
-                new AuditoriaMedicaController().recepcionar(recepcionDetalle.getArchivoId());
-            } else {
-                throw new IllegalArgumentException("sectorUI no válido: " + sectorUI);
-            }
+            SGDUtilities.getArchivoController(sectorUI).recepcionar(recepcionDetalle.getArchivoId());
         }
     }
 
@@ -234,14 +198,6 @@ public class RecepcionController implements ActionListener {
         }
     }
 
-    @Deprecated
-    private void doReport(Recepcion entity) throws MissingReportException, JRException {
-//        Reportes r = new Reportes(DAO.getJDBCConnection(), SGD.getResources().getString("report.recibido"), "Recibo de Envío N " + entity.getNumero());
-//        r.addParameter("RECIBO_ID", entity.getId());
-//        r.addParameter("TABLA", sectorUI.getNombre());
-//        r.printReport(true);
-    }
-
     private void initBuscador() {
         buscadorPanel = new BuscadorReciboPanel();
         buscador = new JDBuscador(customABMJDialog, true, buscadorPanel, "Buscador de Recepciones");
@@ -268,63 +224,13 @@ public class RecepcionController implements ActionListener {
     }
 
     private void setPanelABM(Recepcion entity) {
+        DefaultTableModel dtm = (DefaultTableModel) abmPanel.getjTableDetalle().getModel();
         abmPanel.getTfNumero().setText(entity.getNumero().toString());
         for (RecepcionDetalle detalle : entity.getDetalle()) {
-            Archivo o;
             Integer archivoId = detalle.getArchivoId();
-            switch (entity.getSector().getSectorUI()) {
-                case AFILIACION: {
-                    o = new AfiliacionJPAController().find(archivoId);
-                    break;
-                }
-                case APE: {
-                    o = new ApeJPAController().find(archivoId);
-                    break;
-                }
-                case AUDITORIA: {
-                    o = new AuditoriaJpaController().find(archivoId);
-                    break;
-                }
-                case CONTABLE: {
-                    o = new ContableJPAController().find(archivoId);
-                    break;
-                }
-                case FACTURACION: {
-                    o = new FacturacionJpaController().find(archivoId);
-                    break;
-                }
-                case PSICOFISICO: {
-                    o = new PsicofisicoJPAController().find(archivoId);
-                    break;
-                }
-                case GREMIALES: {
-                    o = new GremialesJpaController().find(archivoId);
-                    break;
-                }
-                case CRONICO: {
-                    o = new CronicoJpaController().find(archivoId);
-                    break;
-                }
-                case DISCAPACIDAD: {
-                    o = new DiscapacidadJpaController().find(archivoId);
-                    break;
-                }
-               case AUDITORIAMEDICA: {
-                    o = new AuditoriaMedicaJpaController().find(archivoId);
-                    break;
-                }
-                default: {
-                    throw new IllegalArgumentException("sectorUI no definido: " + entity.getSector());
-                }
-            }
-            String precintosString = "";
-            for (Precinto precinto : o.getPrecintos()) {
-                precintosString += precinto.getCodigo() + ", ";
-            }
-            precintosString = precintosString.substring(0, precintosString.length() - 2);
-            System.out.println(o.toString());
-            ((DefaultTableModel) abmPanel.getjTableDetalle().getModel())
-                    .addRow(new Object[]{o, o.getBarcode(), precintosString});
+            Archivo o = SGDUtilities.getArchivoController(sectorUI).find(archivoId);
+            String precintosString = SGDUtilities.precintosToString(o.getPrecintos());
+            dtm.addRow(new Object[]{o, o.getBarcode(), precintosString});
         }
     }
 

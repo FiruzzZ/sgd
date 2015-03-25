@@ -1,14 +1,4 @@
 --20150317
-ALTER TABLE afiliacion DROP COLUMN cerrada;
-ALTER TABLE ape DROP COLUMN cerrada;
-ALTER TABLE auditoria DROP COLUMN cerrada;
-ALTER TABLE contable DROP COLUMN cerrada;
-ALTER TABLE cronico DROP COLUMN cerrada;
-ALTER TABLE discapacidad DROP COLUMN cerrada;
-ALTER TABLE facturacion DROP COLUMN cerrada;
-ALTER TABLE gremiales DROP COLUMN cerrada;
-ALTER TABLE psicofisico DROP COLUMN cerrada;
-
 CREATE TABLE auditoriamedica(
   id serial NOT NULL,
   baja boolean,
@@ -24,7 +14,7 @@ CREATE TABLE auditoriamedica(
   CONSTRAINT fk_auditoriamedica_institucion_id FOREIGN KEY (institucion_id) REFERENCES institucion (id),
   CONSTRAINT fk_auditoriamedica_recibo_id FOREIGN KEY (recibo_id) REFERENCES recibo (id),
   CONSTRAINT fk_auditoriamedica_sector_id FOREIGN KEY (sector_id) REFERENCES sector (id),
-  CONSTRAINT fk_auditoriamedica_usuario_id FOREIGN KEY (usuario_id) REFERENCES usuario (id,
+  CONSTRAINT fk_auditoriamedica_usuario_id FOREIGN KEY (usuario_id) REFERENCES usuario (id),
   CONSTRAINT auditoriamedica_barcode_key UNIQUE (barcode),
   CONSTRAINT unq_auditoriamedica_0 UNIQUE (institucion_id, sector_id, codigo)
 );

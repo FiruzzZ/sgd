@@ -27,10 +27,9 @@ import utilities.swing.components.ComboBoxWrapper;
  *
  * @author FiruzzZ
  */
-public class AuditoriaMedicaController extends ArchivoController implements ActionListener {
+public class AuditoriaMedicaController extends ArchivoController<AuditoriaMedica> implements ActionListener {
 
     private CustomABMJDialog customABMJDialog;
-    private JDBuscador buscador;
     private ABMAuditoriaMedicaPanel abmPanel;
     private BuscadorAuditoriaMedicaPanel buscadorPanel;
     private AuditoriaMedica entity;
@@ -239,11 +238,16 @@ public class AuditoriaMedicaController extends ArchivoController implements Acti
             AuditoriaMedicaDetalle old = (AuditoriaMedicaDetalle) dtm.getValueAt(row, 0);
             if (Objects.equals(old.getTipoDocumento(), toAdd.getTipoDocumento())) {
                 if (Objects.equals(old.getSubTipoDocumento(), toAdd.getSubTipoDocumento())) {
-                    if (Objects.equals(old.getNumeroAfiliado(), toAdd.getNumeroAfiliado())) {
+                    if (Objects.equals(old.getNumeroAfiliado(), toAdd.getNumeroAfiliado())
+                            && Objects.equals(old.getNumeroDocumento(), toAdd.getNumeroDocumento())
+                            && Objects.equals(old.getDocumentoFecha(), toAdd.getDocumentoFecha())) {
                         throw new MessageException("Ya existe un detalle con los mismos datos:"
                                 + "\nTipo de Documento: " + old.getTipoDocumento().getNombre()
                                 + (old.getSubTipoDocumento() == null ? "" : "\nSub-Tipo de Documento: " + old.getSubTipoDocumento().getNombre())
-                                + "\nN° Afiliado: " + old.getNumeroAfiliado());
+                                + "\nN° Afiliado: " + ((old.getNumeroAfiliado() == null) ? "" : old.getNumeroAfiliado())
+                                + "\nN° Documento (DNI): " + ((old.getNumeroDocumento() == null) ? "" : old.getNumeroDocumento())
+                                + "\nFecha: " + ((old.getDocumentoFecha() == null) ? "" : old.getDocumentoFecha())
+                        );
                     }
                 }
             }
@@ -383,9 +387,9 @@ public class AuditoriaMedicaController extends ArchivoController implements Acti
             Long nf = Long.valueOf(data.get("afiliado").toString());
             sb.append(" AND o.numeroAfiliado = ").append(nf);
         }
-        
-         if (data.get("observaciones").toString().length() > 0) {
-           sb.append(" AND upper(o.observacion) like '%").append(data.get("observaciones").toString().toUpperCase()).append("%'");
+
+        if (data.get("observaciones").toString().length() > 0) {
+            sb.append(" AND upper(o.observacion) like '%").append(data.get("observaciones").toString().toUpperCase()).append("%'");
         }
         Logger.getLogger(this.getClass()).trace(sb.toString());
         return sb.toString();
@@ -429,7 +433,7 @@ public class AuditoriaMedicaController extends ArchivoController implements Acti
         Reportes r = new Reportes(DAO.getJDBCConnection(), SGD.getResources().getString("report.codigobarra"), "Archivo " + o.getClass().getSimpleName() + " N" + o.getBarcode());
         r.addParameter("TABLA", o.getClass().getSimpleName());
         r.addParameter("ID_TABLA", o.getId());
-       r.viewReport();
+        r.viewReport();
     }
 
     private void btnNuevoAction() {
@@ -510,6 +514,11 @@ public class AuditoriaMedicaController extends ArchivoController implements Acti
             }
         }
         return orderIndex + 1;
+    }
+
+    @Override
+    AuditoriaMedica find(Integer archivoId) {
+        return jpaController.find(archivoId);
     }
 
 }

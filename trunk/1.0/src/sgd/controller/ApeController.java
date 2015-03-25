@@ -31,10 +31,9 @@ import utilities.swing.components.ComboBoxWrapper;
  *
  * @author FiruzzZ
  */
-public class ApeController implements ActionListener {
+public class ApeController extends ArchivoController<Ape> implements ActionListener {
 
     private CustomABMJDialog customABMJDialog;
-    private JDBuscador buscador;
     private ABMAPEProtesisPanel abmPanel;
     private Ape entity;
     private BuscadorApePanel buscadorPanel;
@@ -428,7 +427,7 @@ public class ApeController implements ActionListener {
         Reportes r = new Reportes(DAO.getJDBCConnection(), SGD.getResources().getString("report.codigobarra"), "Archivo " + o.getClass().getSimpleName() + " N" + o.getBarcode());
         r.addParameter("TABLA", o.getClass().getSimpleName());
         r.addParameter("ID_TABLA", o.getId());
-       r.viewReport();
+        r.viewReport();
     }
 
     CustomABMJDialog getAbmRecibos(JFrame owner) {
@@ -440,7 +439,7 @@ public class ApeController implements ActionListener {
         entity.setPrecintos(null);
     }
 
-    JDialog viewArchivo(Ape o) {
+    CustomABMJDialog viewArchivo(Ape o) {
         abmPanel = new ABMAPEProtesisPanel();
         UTIL.hideColumnTable(abmPanel.getjTable1(), 0);
         abmPanel.getCbInstitucion().addItem(o.getInstitucion().getNombre());
@@ -495,6 +494,7 @@ public class ApeController implements ActionListener {
         abmPanel.setBarcode(us.getInstitucion().getId() + "-" + us.getSector().getSectorUI().getCode() + "-xxxxxx");
     }
 
+    @Override
     void enviado(Integer archivoId, Recibo recibo) {
         Ape o = jPAController.find(archivoId);
         o.setRecibo(recibo);
@@ -506,8 +506,8 @@ public class ApeController implements ActionListener {
         o.setRecibo(null);
         jPAController.merge(o);
     }
-    
-      Archivo getArchivo(Integer archivoId) {
-       return jPAController.find(archivoId);
+
+    Ape find(Integer archivoId) {
+        return jPAController.find(archivoId);
     }
 }

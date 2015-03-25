@@ -9,7 +9,6 @@ import java.awt.event.MouseEvent;
 import java.util.*;
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import net.sf.jasperreports.engine.JRException;
@@ -30,10 +29,9 @@ import utilities.swing.components.ComboBoxWrapper;
  *
  * @author FiruzzZ
  */
-public class PsicofisicoController implements ActionListener {
+public class PsicofisicoController extends ArchivoController<Psicofisico> implements ActionListener {
 
     private CustomABMJDialog customABMJDialog;
-    private JDBuscador buscador;
     private ABMPsicofisicoPanel abmPanel;
     private BuscadorPsicofisicoPanel buscadorPanel;
     private Psicofisico entity;
@@ -434,7 +432,7 @@ public class PsicofisicoController implements ActionListener {
         Reportes r = new Reportes(DAO.getJDBCConnection(), SGD.getResources().getString("report.codigobarra"), "Archivo " + o.getClass().getSimpleName() + " N" + o.getBarcode());
         r.addParameter("TABLA", o.getClass().getSimpleName());
         r.addParameter("ID_TABLA", o.getId());
-       r.viewReport();
+        r.viewReport();
     }
 
     private void btnNuevoAction() {
@@ -448,6 +446,7 @@ public class PsicofisicoController implements ActionListener {
         abmPanel.getjBarcodeBean1().setCode(us.getInstitucion().getId() + "-" + us.getSector().getSectorUI().getCode() + "-xxxxxx");
     }
 
+    @Override
     CustomABMJDialog viewArchivo(Psicofisico o) {
         abmPanel = new ABMPsicofisicoPanel();
         UTIL.hideColumnTable(abmPanel.getjTable1(), 0);
@@ -458,6 +457,25 @@ public class PsicofisicoController implements ActionListener {
         ccustomABMJDialog.setBottomButtonsVisible(false);
         ccustomABMJDialog.setPanelComponentsEnabled(false);
         return ccustomABMJDialog;
+    }
+
+    @Override
+    void enviado(Integer archivoId, Recibo recibo) {
+        Psicofisico o = jpaController.find(archivoId);
+        o.setRecibo(recibo);
+        jpaController.merge(o);
+    }
+
+    @Override
+    void recepcionar(Integer archivoId) {
+        Psicofisico o = jpaController.find(archivoId);
+        o.setRecibo(null);
+        jpaController.merge(o);
+    }
+
+    @Override
+    Psicofisico find(Integer archivoId) {
+        return jpaController.find(archivoId);
     }
 
     private void removePrecintos(Psicofisico entity) {
@@ -491,20 +509,4 @@ public class PsicofisicoController implements ActionListener {
         }
     }
 
-    void enviado(Integer archivoId, Recibo recibo) {
-        Psicofisico o = jpaController.find(archivoId);
-        o.setRecibo(recibo);
-        jpaController.merge(o);
-    }
-
-    void recepcionar(Integer archivoId) {
-        Psicofisico o = jpaController.find(archivoId);
-        o.setRecibo(null);
-        jpaController.merge(o);
-    }
-    
- 
-    Archivo getArchivo(Integer archivoId) {
-       return jpaController.find(archivoId);
-    }
 }

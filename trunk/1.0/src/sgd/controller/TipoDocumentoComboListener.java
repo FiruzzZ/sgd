@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComboBox;
 import org.apache.log4j.Logger;
-import sgd.jpa.controller.SectorJPAController;
 import sgd.jpa.controller.TipoDocumentoJPAController;
 import sgd.jpa.model.*;
 import utilities.general.UTIL;

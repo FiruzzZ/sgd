@@ -4,11 +4,6 @@
  */
 package sgd.gui.panel;
 
-import java.util.HashMap;
-import java.util.Map;
-import javax.swing.JComboBox;
-import javax.swing.JTextField;
-
 /**
  *
  * @author FiruzzZ

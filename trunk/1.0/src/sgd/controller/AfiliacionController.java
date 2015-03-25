@@ -27,10 +27,9 @@ import utilities.swing.components.ComboBoxWrapper;
  *
  * @author FiruzzZ
  */
-public class AfiliacionController extends ArchivoController implements ActionListener {
+public class AfiliacionController extends ArchivoController<Afiliacion> implements ActionListener {
 
     private CustomABMJDialog customABMJDialog;
-    private JDBuscador buscador;
     private ABMAfiliacionPanel abmPanel;
     private BuscadorAfiliacionPanel buscadorPanel;
     private Afiliacion entity;
@@ -439,12 +438,13 @@ public class AfiliacionController extends ArchivoController implements ActionLis
         abmPanel.setBarcode(us.getInstitucion().getId() + "-" + us.getSector().getSectorUI().getCode() + "-xxxxxx");
     }
 
+    @Override
     CustomABMJDialog viewArchivo(Afiliacion o) {
         abmPanel = new ABMAfiliacionPanel();
         UTIL.hideColumnTable(abmPanel.getjTable1(), 0);
         abmPanel.getCbInstitucion().addItem(o.getInstitucion().getNombre());
         setPanelABM(o);
-        CustomABMJDialog ccustomABMJDialog = new CustomABMJDialog((JDialog) null, abmPanel, "Archivo " + o.getClass().getSimpleName() + " " + o.getBarcode(), true, null);
+        CustomABMJDialog ccustomABMJDialog = new CustomABMJDialog(null, abmPanel, "Archivo " + o.getClass().getSimpleName() + " " + o.getBarcode(), true, null);
         ccustomABMJDialog.setToolBarVisible(false);
         ccustomABMJDialog.setBottomButtonsVisible(false);
         ccustomABMJDialog.setPanelComponentsEnabled(false);
@@ -507,7 +507,7 @@ public class AfiliacionController extends ArchivoController implements ActionLis
     }
 
     @Override
-    Archivo getArchivo(Integer archivoId) {
+    Afiliacion find(Integer archivoId) {
        return jpaController.find(archivoId);
     }
 

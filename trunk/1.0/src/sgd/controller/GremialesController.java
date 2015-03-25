@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -33,7 +32,6 @@ import sgd.gui.panel.BuscadorGremialesPanel;
 import sgd.jpa.controller.DAO;
 import sgd.jpa.controller.GremialesJpaController;
 import sgd.jpa.controller.UsuarioSectorJPAController;
-import sgd.jpa.model.Archivo;
 import sgd.jpa.model.Gremiales;
 import sgd.jpa.model.GremialesDetalle;
 import sgd.jpa.model.GremialesDetalle_;
@@ -52,10 +50,9 @@ import utilities.swing.components.ComboBoxWrapper;
  *
  * @author FiruzzZ
  */
-public class GremialesController implements ActionListener {
+public class GremialesController extends ArchivoController<Gremiales> implements ActionListener {
 
     private CustomABMJDialog abmDialog;
-    private JDBuscador buscador;
     private ABMGremialesPanel abmPanel;
     private BuscadorGremialesPanel buscadorPanel;
     private Gremiales entity;
@@ -541,7 +538,7 @@ public class GremialesController implements ActionListener {
         Reportes r = new Reportes(DAO.getJDBCConnection(), SGD.getResources().getString("report.codigobarra"), "Archivo " + o.getClass().getSimpleName() + " N" + o.getBarcode());
         r.addParameter("TABLA", o.getClass().getSimpleName());
         r.addParameter("ID_TABLA", o.getId());
-       r.viewReport();
+        r.viewReport();
     }
 
     private void btnNuevoAction() {
@@ -675,9 +672,8 @@ public class GremialesController implements ActionListener {
             }
         }
     }
-    
 
-    Archivo getArchivo(Integer archivoId) {
-       return jpaController.find(archivoId);
+    Gremiales find(Integer archivoId) {
+        return jpaController.find(archivoId);
     }
 }

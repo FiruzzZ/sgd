@@ -8,7 +8,6 @@ import org.apache.log4j.PropertyConfigurator;
 import sgd.SGD;
 import sgd.controller.*;
 import sgd.jpa.controller.*;
-import sgd.jpa.model.*;
 
 /**
  *
