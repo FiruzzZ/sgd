@@ -27,10 +27,9 @@ import utilities.swing.components.ComboBoxWrapper;
  *
  * @author FiruzzZ
  */
-public class AuditoriaMedicaController extends ArchivoController implements ActionListener {
+public class AuditoriaMedicaController extends ArchivoController<AuditoriaMedica> implements ActionListener {
 
     private CustomABMJDialog customABMJDialog;
-    private JDBuscador buscador;
     private ABMAuditoriaMedicaPanel abmPanel;
     private BuscadorAuditoriaMedicaPanel buscadorPanel;
     private AuditoriaMedica entity;
@@ -518,7 +517,7 @@ public class AuditoriaMedicaController extends ArchivoController implements Acti
     }
 
     @Override
-    Archivo getArchivo(Integer archivoId) {
+    AuditoriaMedica find(Integer archivoId) {
         return jpaController.find(archivoId);
     }
 
