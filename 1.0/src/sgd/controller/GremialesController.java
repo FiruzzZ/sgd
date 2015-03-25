@@ -33,6 +33,7 @@ import sgd.gui.panel.BuscadorGremialesPanel;
 import sgd.jpa.controller.DAO;
 import sgd.jpa.controller.GremialesJpaController;
 import sgd.jpa.controller.UsuarioSectorJPAController;
+import sgd.jpa.model.Archivo;
 import sgd.jpa.model.Gremiales;
 import sgd.jpa.model.GremialesDetalle;
 import sgd.jpa.model.GremialesDetalle_;
@@ -673,5 +674,10 @@ public class GremialesController implements ActionListener {
                 AutoCompleteDecorator.decorate(abmPanel.getTfEmpleadoNombre(), new ArrayList<>(empleadosList.keySet()), false);
             }
         }
+    }
+    
+
+    Archivo getArchivo(Integer archivoId) {
+       return jpaController.find(archivoId);
     }
 }

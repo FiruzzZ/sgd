@@ -506,4 +506,9 @@ public class AfiliacionController extends ArchivoController implements ActionLis
         return orderIndex + 1;
     }
 
+    @Override
+    Archivo getArchivo(Integer archivoId) {
+       return jpaController.find(archivoId);
+    }
+
 }

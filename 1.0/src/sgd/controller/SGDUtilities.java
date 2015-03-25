@@ -62,7 +62,9 @@ public class SGDUtilities {
         for (Precinto precinto : precintos) {
             precintosString += precinto.getCodigo() + ", ";
         }
-        precintosString = precintosString.substring(0, precintosString.length() - 2);
+        if (!precintosString.isEmpty()) {
+            precintosString = precintosString.substring(0, precintosString.length() - 2);
+        }
         return precintosString;
     }
 

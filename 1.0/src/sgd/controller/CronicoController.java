@@ -25,6 +25,7 @@ import sgd.gui.panel.BuscadorCronicoPanel;
 import sgd.jpa.controller.CronicoJpaController;
 import sgd.jpa.controller.DAO;
 import sgd.jpa.controller.UsuarioSectorJPAController;
+import sgd.jpa.model.Archivo;
 import sgd.jpa.model.Cronico;
 import sgd.jpa.model.CronicoDetalle;
 import sgd.jpa.model.CronicoDetalle_;
@@ -559,5 +560,9 @@ public class CronicoController implements ActionListener {
             }
         }
         return orderIndex + 1;
+    }
+    
+      Archivo getArchivo(Integer archivoId) {
+       return jpaController.find(archivoId);
     }
 }

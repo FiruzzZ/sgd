@@ -27,6 +27,7 @@ import sgd.gui.panel.BuscadorDiscapacidadPanel;
 import sgd.jpa.controller.DAO;
 import sgd.jpa.controller.DiscapacidadJpaController;
 import sgd.jpa.controller.UsuarioSectorJPAController;
+import sgd.jpa.model.Archivo;
 import sgd.jpa.model.Discapacidad;
 import sgd.jpa.model.DiscapacidadDetalle;
 import sgd.jpa.model.DiscapacidadDetalle_;
@@ -526,5 +527,9 @@ public class DiscapacidadController implements ActionListener {
         Discapacidad o = jpaController.find(archivoId);
         o.setRecibo(null);
         jpaController.merge(o);
+    }
+    
+      Archivo getArchivo(Integer archivoId) {
+       return jpaController.find(archivoId);
     }
 }

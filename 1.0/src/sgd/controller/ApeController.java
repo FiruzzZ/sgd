@@ -506,4 +506,8 @@ public class ApeController implements ActionListener {
         o.setRecibo(null);
         jPAController.merge(o);
     }
+    
+      Archivo getArchivo(Integer archivoId) {
+       return jPAController.find(archivoId);
+    }
 }
