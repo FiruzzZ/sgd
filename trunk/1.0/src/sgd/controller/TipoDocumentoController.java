@@ -255,6 +255,9 @@ public class TipoDocumentoController implements ActionListener {
         } else if (sectorUI.equals(SectorUI.DISCAPACIDAD)) {
             detalle = DiscapacidadDetalle.class;
         }
+         else if (sectorUI.equals(SectorUI.AUDITORIAMEDICA)) {
+            detalle = AuditoriaMedicaDetalle.class;
+        }
         String query = "SELECT d.tipoDocumento FROM " + detalle.getSimpleName() + " d WHERE d.tipoDocumento.id = " + td.getId();
         l = jPAController.findUsoTipoDocumento(query, td);
         return !l.isEmpty();

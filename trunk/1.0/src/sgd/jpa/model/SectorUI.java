@@ -15,7 +15,8 @@ public enum SectorUI {
     AUDITORIA(106, "Auditoria"),
     GREMIALES(107, "Gremiales"),
     CRONICO(108, "Cronico"),
-    DISCAPACIDAD(109, "Discapacidad");
+    DISCAPACIDAD(109, "Discapacidad"),
+    AUDITORIAMEDICA(110, "AuditoriaMedica");
 
     private final Integer code;
     private final String nombre;

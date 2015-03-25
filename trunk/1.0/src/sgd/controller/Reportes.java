@@ -2,6 +2,7 @@ package sgd.controller;
 
 import controller.exceptions.MissingReportException;
 import generics.WaitingDialog;
+import java.awt.Dialog;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
@@ -104,6 +105,9 @@ public class Reportes implements Runnable {
     }
 
     public void viewReport() throws JRException {
+        jd = new WaitingDialog((JDialog) null, "Preparando impresion", false, "Preparando archivo para impresión");
+        //jd.setAlwaysOnTop(true);
+        jd.setVisible(true);
         isViewerReport = true;
         reportThread = new Thread(this, pathReport);
         reportThread.start();
@@ -129,6 +133,9 @@ public class Reportes implements Runnable {
     }
 
     public void printReport() throws JRException {
+        jd = new WaitingDialog((JDialog) null, "Preparando impresion", false, "Preparando archivo para impresión");
+        jd.setAlwaysOnTop(true);
+        jd.setVisible(true);
         isViewerReport = false;
         reportThread = new Thread(this, pathReport);
         reportThread.start();
@@ -193,7 +200,9 @@ public class Reportes implements Runnable {
                 JasperViewer jViewer = new JasperViewer(jPrint, false);
                 jViewer.setTitle(tituloReporte);
                 jViewer.setExtendedState(JasperViewer.NORMAL);
-                jViewer.setAlwaysOnTop(true);
+                jViewer.setModalExclusionType(Dialog.ModalExclusionType.TOOLKIT_EXCLUDE);
+               // jViewer.s
+                //jViewer.setAlwaysOnTop(true);
                 jd.dispose();
                 jViewer.setVisible(true);
             } else {

@@ -1,3 +1,56 @@
+--20150317
+ALTER TABLE afiliacion DROP COLUMN cerrada;
+ALTER TABLE ape DROP COLUMN cerrada;
+ALTER TABLE auditoria DROP COLUMN cerrada;
+ALTER TABLE contable DROP COLUMN cerrada;
+ALTER TABLE cronico DROP COLUMN cerrada;
+ALTER TABLE discapacidad DROP COLUMN cerrada;
+ALTER TABLE facturacion DROP COLUMN cerrada;
+ALTER TABLE gremiales DROP COLUMN cerrada;
+ALTER TABLE psicofisico DROP COLUMN cerrada;
+
+CREATE TABLE auditoriamedica(
+  id serial NOT NULL,
+  baja boolean,
+  barcode character varying(50) NOT NULL,
+  codigo integer NOT NULL,
+  creation timestamp with time zone NOT NULL DEFAULT now(),
+  observacion character varying(200),
+  institucion_id integer,
+  recibo_id integer,
+  sector_id integer,
+  usuario_id integer,
+  CONSTRAINT auditoriamedica_pkey PRIMARY KEY (id),
+  CONSTRAINT fk_auditoriamedica_institucion_id FOREIGN KEY (institucion_id) REFERENCES institucion (id),
+  CONSTRAINT fk_auditoriamedica_recibo_id FOREIGN KEY (recibo_id) REFERENCES recibo (id),
+  CONSTRAINT fk_auditoriamedica_sector_id FOREIGN KEY (sector_id) REFERENCES sector (id),
+  CONSTRAINT fk_auditoriamedica_usuario_id FOREIGN KEY (usuario_id) REFERENCES usuario (id,
+  CONSTRAINT auditoriamedica_barcode_key UNIQUE (barcode),
+  CONSTRAINT unq_auditoriamedica_0 UNIQUE (institucion_id, sector_id, codigo)
+);
+CREATE TABLE auditoriamedicadetalle (
+  id serial NOT NULL,
+  documentofecha date,
+  numeroafiliado bigint,
+  observacion character varying(255),
+  numerodocumento bigint,
+  orderindex integer NOT NULL,
+  auditoriamedica_id integer NOT NULL,
+  subtipodocumento_id integer,
+  tipodocumento_id integer NOT NULL,
+  CONSTRAINT auditoriamedicadetalle_pkey PRIMARY KEY (id),
+  CONSTRAINT fk_auditoriamedicadetalle_auditoriamedica_id FOREIGN KEY (auditoriamedica_id) REFERENCES auditoriamedica (id),
+  CONSTRAINT fk_auditoriamedicadetalle_subtipodocumento_id FOREIGN KEY (subtipodocumento_id) REFERENCES subtipodocumento (id),
+  CONSTRAINT fk_auditoriamedicadetalle_tipodocumento_id FOREIGN KEY (tipodocumento_id) REFERENCES tipodocumento (id) 
+);
+CREATE TABLE auditoriamedicaprecinto (
+  id serial NOT NULL,
+  codigo character varying(30) NOT NULL,
+  auditoriamedica_id integer NOT NULL,
+  CONSTRAINT auditoriamedicaprecinto_pkey PRIMARY KEY (id),
+  CONSTRAINT fk_auditoriamedicaprecinto_auditoriamedica_id FOREIGN KEY (auditoriamedica_id) REFERENCES auditoriamedica (id) 
+);
+
 --20141128
 alter table afiliacion drop column cerrada;
 alter table ape drop column cerrada;
