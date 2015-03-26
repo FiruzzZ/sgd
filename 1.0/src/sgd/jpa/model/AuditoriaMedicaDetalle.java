@@ -35,11 +35,13 @@ public class AuditoriaMedicaDetalle implements Serializable {
     @JoinColumn(nullable = false)
     @ManyToOne(optional = false)
     private AuditoriaMedica auditoriaMedica;
+     @Column(length = 200)
+    private String delegacion;
 
     public AuditoriaMedicaDetalle() {
     }
 
-    public AuditoriaMedicaDetalle(Integer orderIndex, TipoDocumento tipoDocumento, SubTipoDocumento subTipoDocumento, Long numeroAfiliado, Integer numeroDocumento, Date documentoFecha, String observacion, AuditoriaMedica auditoriaMedica) {
+    public AuditoriaMedicaDetalle(Integer orderIndex, TipoDocumento tipoDocumento, SubTipoDocumento subTipoDocumento, Long numeroAfiliado, Integer numeroDocumento, Date documentoFecha, String observacion, AuditoriaMedica auditoriaMedica, String delegacion) {
         this.orderIndex = orderIndex;
         this.tipoDocumento = tipoDocumento;
         this.subTipoDocumento = subTipoDocumento;
@@ -48,6 +50,7 @@ public class AuditoriaMedicaDetalle implements Serializable {
         this.observacion = observacion;
         this.auditoriaMedica = auditoriaMedica;
         this.numeroDocumento = numeroDocumento;
+        this.delegacion = delegacion;
     }
 
     public AuditoriaMedica getAuditoriaMedica() {
@@ -123,6 +126,14 @@ public class AuditoriaMedicaDetalle implements Serializable {
 
     public void setTipoDocumento(TipoDocumento tipoDocumento) {
         this.tipoDocumento = tipoDocumento;
+    }
+
+    public String getDelegacion() {
+        return delegacion;
+    }
+
+    public void setDelegacion(String delegacion) {
+        this.delegacion = delegacion;
     }
 
    
