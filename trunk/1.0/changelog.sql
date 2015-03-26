@@ -1,3 +1,8 @@
+--20150326
+ALTER TABLE auditoriamedicadetalle
+  ADD COLUMN delegacion character varying(50);
+
+
 --20150317
 CREATE TABLE auditoriamedica(
   id serial NOT NULL,

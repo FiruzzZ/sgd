@@ -11,6 +11,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import net.sf.jasperreports.engine.JRException;
 import org.apache.log4j.Logger;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import sgd.SGD;
 import sgd.controller.exception.MessageException;
 import sgd.gui.JDBuscador;
@@ -50,6 +51,7 @@ public class AuditoriaMedicaController extends ArchivoController<AuditoriaMedica
         new TipoDocumentoComboListener(abmPanel.getCbTipoDocumento(), abmPanel.getCbSubTipoDocumento());
         UTIL.loadComboBox(abmPanel.getCbTipoDocumento(), ltd, false, "<Sin Tipo de Documento>");
         abmPanel.getCbInstitucion().setSelectedIndex(0);
+        loadDelegaciones();
         abmPanel.addButtonsActionListener(this);
         customABMJDialog = new CustomABMJDialog(owner, abmPanel, "ABM " + sectorUI, true, null);
         customABMJDialog.setPanelComponentsEnabled(false);
@@ -95,6 +97,7 @@ public class AuditoriaMedicaController extends ArchivoController<AuditoriaMedica
                             customABMJDialog.setPanelComponentsEnabled(true);
                             customABMJDialog.setEnabledBottomButtons(true);
                             abmPanel.getCbInstitucion().setEnabled(false);
+                            loadDelegaciones();
                         } catch (MessageException ex) {
                             ex.displayMessage(customABMJDialog);
                         }
@@ -183,6 +186,7 @@ public class AuditoriaMedicaController extends ArchivoController<AuditoriaMedica
         Integer numeroDocumento = null;
         Date documentoFecha;
         String observacion = null;
+        String delegacion = null;
 
         try {
             @SuppressWarnings("unchecked")
@@ -222,13 +226,16 @@ public class AuditoriaMedicaController extends ArchivoController<AuditoriaMedica
         if (!data.get("observacion").toString().isEmpty()) {
             observacion = (String) data.get("observacion");
         }
+         if (!data.get("delegacion").toString().isEmpty()) {
+            delegacion = (String) data.get("delegacion");
+        }
 
         if ((documentoFecha == null) && (numeroDocumento == null) && (numeroAfiliado == null)) {
             throw new MessageException("Debe cargar al menos un campo. (Número de Afiliado, DNI, fecha de Documento)");
 
         }
 
-        AuditoriaMedicaDetalle detalle = new AuditoriaMedicaDetalle(getNextOrderIndex(entity), td, std, numeroAfiliado, numeroDocumento, documentoFecha, observacion, entity);
+        AuditoriaMedicaDetalle detalle = new AuditoriaMedicaDetalle(getNextOrderIndex(entity), td, std, numeroAfiliado, numeroDocumento, documentoFecha, observacion, entity, delegacion);
         return detalle;
     }
 
@@ -240,13 +247,16 @@ public class AuditoriaMedicaController extends ArchivoController<AuditoriaMedica
                 if (Objects.equals(old.getSubTipoDocumento(), toAdd.getSubTipoDocumento())) {
                     if (Objects.equals(old.getNumeroAfiliado(), toAdd.getNumeroAfiliado())
                             && Objects.equals(old.getNumeroDocumento(), toAdd.getNumeroDocumento())
-                            && Objects.equals(old.getDocumentoFecha(), toAdd.getDocumentoFecha())) {
+                            && Objects.equals(old.getDocumentoFecha(), toAdd.getDocumentoFecha())
+                            && Objects.equals(old.getDelegacion().toUpperCase(), toAdd.getDelegacion().toUpperCase())
+                            ) {
                         throw new MessageException("Ya existe un detalle con los mismos datos:"
                                 + "\nTipo de Documento: " + old.getTipoDocumento().getNombre()
                                 + (old.getSubTipoDocumento() == null ? "" : "\nSub-Tipo de Documento: " + old.getSubTipoDocumento().getNombre())
                                 + "\nN° Afiliado: " + ((old.getNumeroAfiliado() == null) ? "" : old.getNumeroAfiliado())
                                 + "\nN° Documento (DNI): " + ((old.getNumeroDocumento() == null) ? "" : old.getNumeroDocumento())
                                 + "\nFecha: " + ((old.getDocumentoFecha() == null) ? "" : old.getDocumentoFecha())
+                                + "\nDelegación: " + ((old.getDelegacion() == null) ? "" : old.getDelegacion())
                         );
                     }
                 }
@@ -259,6 +269,7 @@ public class AuditoriaMedicaController extends ArchivoController<AuditoriaMedica
         String fecha = "";
         if (detalle.getDocumentoFecha() != null) {
             fecha = UTIL.DATE_FORMAT.format(detalle.getDocumentoFecha());
+            fecha = fecha.substring(3, fecha.length());
         }
 
         dtm.addRow(new Object[]{
@@ -267,6 +278,7 @@ public class AuditoriaMedicaController extends ArchivoController<AuditoriaMedica
             detalle.getSubTipoDocumento() != null ? detalle.getSubTipoDocumento().getNombre() : null,
             detalle.getNumeroAfiliado(), detalle.getNumeroDocumento(),
             fecha,
+            detalle.getDelegacion(),
             detalle.getObservacion()
         });
     }
@@ -298,6 +310,7 @@ public class AuditoriaMedicaController extends ArchivoController<AuditoriaMedica
         SGDUtilities.volcar(abmPanel.getCbInstitucion(), buscadorPanel.getCbInstitucion(), "<Elegir>");
         SGDUtilities.volcar(abmPanel.getCbTipoDocumento(), buscadorPanel.getCbTipoDocumento(), "<Elegir>");
         SGDUtilities.volcar(abmPanel.getCbSubTipoDocumento(), buscadorPanel.getCbSubTipoDocumento(), "<Elegir>");
+        SGDUtilities.volcar(abmPanel.getCbDelegacion(), buscadorPanel.getCbDelegacion(), "<Elegir>");
         buscadorPanel.getCbInstitucion().setSelectedIndex(0);
         buscadorPanel.getCbTipoDocumento().setSelectedIndex(0);
         buscadorPanel.getCbSubTipoDocumento().setSelectedIndex(0);
@@ -391,6 +404,13 @@ public class AuditoriaMedicaController extends ArchivoController<AuditoriaMedica
         if (data.get("observaciones").toString().length() > 0) {
             sb.append(" AND upper(o.observacion) like '%").append(data.get("observaciones").toString().toUpperCase()).append("%'");
         }
+        
+        if (data.get("delegacion") != null && !data.get("delegacion").toString().isEmpty()) {
+            //@SuppressWarnings("unchecked")
+           // ComboBoxWrapper<TipoDocumento> cb = (ComboBoxWrapper<TipoDocumento>) data.get("td");
+            sb.append(" AND upper(o.delegacion) = '").append(data.get("delegacion").toString().toUpperCase()).append("'");
+        }
+          
         Logger.getLogger(this.getClass()).trace(sb.toString());
         return sb.toString();
     }
@@ -403,6 +423,7 @@ public class AuditoriaMedicaController extends ArchivoController<AuditoriaMedica
             String fecha = "";
             if (detalle.getDocumentoFecha() != null) {
                 fecha = UTIL.DATE_FORMAT.format(detalle.getDocumentoFecha());
+                fecha = fecha.substring(3, fecha.length());
             }
             dtm.addRow(new Object[]{
                 detalle.getAuditoriaMedica(),
@@ -410,6 +431,7 @@ public class AuditoriaMedicaController extends ArchivoController<AuditoriaMedica
                 detalle.getSubTipoDocumento() != null ? detalle.getSubTipoDocumento().getNombre() : null,
                 detalle.getNumeroAfiliado(), detalle.getNumeroDocumento(),
                 fecha,
+                detalle.getDelegacion(),
                 detalle.getObservacion(),
                 detalle.getAuditoriaMedica().getBarcode(),
                 detalle.getAuditoriaMedica().getPrecintos().isEmpty() ? "No" : "Si " + detalle.getAuditoriaMedica().getPrecintos().size(),
@@ -442,6 +464,7 @@ public class AuditoriaMedicaController extends ArchivoController<AuditoriaMedica
         customABMJDialog.setEnabledBottomButtons(true);
         abmPanel.resetUI(true);
         abmPanel.getCbTipoDocumento().setSelectedIndex(0);
+        loadDelegaciones();
         abmPanel.getCbInstitucion().requestFocusInWindow();
         @SuppressWarnings("unchecked")
         ComboBoxWrapper<UsuarioSector> cbw = (ComboBoxWrapper<UsuarioSector>) abmPanel.getCbInstitucion().getSelectedItem();
@@ -519,6 +542,15 @@ public class AuditoriaMedicaController extends ArchivoController<AuditoriaMedica
     @Override
     AuditoriaMedica find(Integer archivoId) {
         return jpaController.find(archivoId);
+    }
+
+    /**
+     * Carga la lista de prestadores para el AutoComplete del JTextfield de
+     * Prestadores en el panel ABM.
+     */
+    private void loadDelegaciones() {
+        UTIL.loadComboBox(abmPanel.getCbDelegacion(), jpaController.findDelegaciones(), false);
+        AutoCompleteDecorator.decorate(abmPanel.getCbDelegacion());
     }
 
 }
