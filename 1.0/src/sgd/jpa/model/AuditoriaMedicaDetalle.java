@@ -35,13 +35,17 @@ public class AuditoriaMedicaDetalle implements Serializable {
     @JoinColumn(nullable = false)
     @ManyToOne(optional = false)
     private AuditoriaMedica auditoriaMedica;
-     @Column(length = 200)
+    @Column(length = 200)
     private String delegacion;
+    @Column(length = 50)
+    private String apellido;
+    @Column(length = 50)
+    private String nombre;
 
     public AuditoriaMedicaDetalle() {
     }
 
-    public AuditoriaMedicaDetalle(Integer orderIndex, TipoDocumento tipoDocumento, SubTipoDocumento subTipoDocumento, Long numeroAfiliado, Integer numeroDocumento, Date documentoFecha, String observacion, AuditoriaMedica auditoriaMedica, String delegacion) {
+    public AuditoriaMedicaDetalle(Integer orderIndex, TipoDocumento tipoDocumento, SubTipoDocumento subTipoDocumento, Long numeroAfiliado, Integer numeroDocumento, Date documentoFecha, String observacion, AuditoriaMedica auditoriaMedica, String delegacion, String nombre, String apellido) {
         this.orderIndex = orderIndex;
         this.tipoDocumento = tipoDocumento;
         this.subTipoDocumento = subTipoDocumento;
@@ -51,6 +55,8 @@ public class AuditoriaMedicaDetalle implements Serializable {
         this.auditoriaMedica = auditoriaMedica;
         this.numeroDocumento = numeroDocumento;
         this.delegacion = delegacion;
+        this.nombre = nombre;
+        this.apellido = apellido;
     }
 
     public AuditoriaMedica getAuditoriaMedica() {
@@ -69,8 +75,6 @@ public class AuditoriaMedicaDetalle implements Serializable {
         this.numeroDocumento = numeroDocumento;
     }
 
-
-
     public Date getDocumentoFecha() {
         return documentoFecha;
     }
@@ -87,7 +91,6 @@ public class AuditoriaMedicaDetalle implements Serializable {
         this.id = id;
     }
 
-  
     public Long getNumeroAfiliado() {
         return numeroAfiliado;
     }
@@ -136,7 +139,6 @@ public class AuditoriaMedicaDetalle implements Serializable {
         this.delegacion = delegacion;
     }
 
-   
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -152,6 +154,37 @@ public class AuditoriaMedicaDetalle implements Serializable {
         return true;
     }
 
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getNombreYApellido() {
+        String nombreyapellido = "";
+        if (this.nombre != null && !this.nombre.isEmpty()) {
+            nombreyapellido = nombreyapellido + this.nombre;
+        }
+        if (this.apellido != null && !this.apellido.isEmpty()) {
+            if (!nombreyapellido.isEmpty()) {
+                nombreyapellido = nombreyapellido + " ";
+            }
+            nombreyapellido = nombreyapellido + this.apellido;
+        }
+
+        return nombreyapellido;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
@@ -161,8 +194,8 @@ public class AuditoriaMedicaDetalle implements Serializable {
 
     @Override
     public String toString() {
-        return "AuditoriaMedicaDetalle{" + "id=" + id + ", orderIndex=" + orderIndex 
-                + ", tipoDocumento=" + tipoDocumento + ", subTipoDocumento=" + subTipoDocumento 
+        return "AuditoriaMedicaDetalle{" + "id=" + id + ", orderIndex=" + orderIndex
+                + ", tipoDocumento=" + tipoDocumento + ", subTipoDocumento=" + subTipoDocumento
                 + ", numeroAfiliado=" + numeroAfiliado + ", numeroDocumento=" + numeroDocumento
                 + ", documentacionFecha=" + documentoFecha + ", observacion=" + observacion + ", auditoriaMedica=" + auditoriaMedica.getId() + '}';
     }
