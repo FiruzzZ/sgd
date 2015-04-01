@@ -187,6 +187,8 @@ public class AuditoriaMedicaController extends ArchivoController<AuditoriaMedica
         Date documentoFecha;
         String observacion = null;
         String delegacion = null;
+        String nombre = null;
+        String apellido = null;
 
         try {
             @SuppressWarnings("unchecked")
@@ -226,8 +228,14 @@ public class AuditoriaMedicaController extends ArchivoController<AuditoriaMedica
         if (!data.get("observacion").toString().isEmpty()) {
             observacion = (String) data.get("observacion");
         }
-         if (!data.get("delegacion").toString().isEmpty()) {
-            delegacion = (String) data.get("delegacion");
+        if (!data.get("delegacion").toString().isEmpty()) {
+            delegacion = ((String) data.get("delegacion")).toUpperCase();
+        }
+        if (!data.get("nombre").toString().isEmpty()) {
+            nombre = ((String) data.get("nombre")).toUpperCase();
+        }
+        if (!data.get("apellido").toString().isEmpty()) {
+            apellido = ((String) data.get("apellido")).toUpperCase();
         }
 
         if ((documentoFecha == null) && (numeroDocumento == null) && (numeroAfiliado == null)) {
@@ -235,7 +243,7 @@ public class AuditoriaMedicaController extends ArchivoController<AuditoriaMedica
 
         }
 
-        AuditoriaMedicaDetalle detalle = new AuditoriaMedicaDetalle(getNextOrderIndex(entity), td, std, numeroAfiliado, numeroDocumento, documentoFecha, observacion, entity, delegacion);
+        AuditoriaMedicaDetalle detalle = new AuditoriaMedicaDetalle(getNextOrderIndex(entity), td, std, numeroAfiliado, numeroDocumento, documentoFecha, observacion, entity, delegacion, nombre, apellido);
         return detalle;
     }
 
@@ -248,8 +256,7 @@ public class AuditoriaMedicaController extends ArchivoController<AuditoriaMedica
                     if (Objects.equals(old.getNumeroAfiliado(), toAdd.getNumeroAfiliado())
                             && Objects.equals(old.getNumeroDocumento(), toAdd.getNumeroDocumento())
                             && Objects.equals(old.getDocumentoFecha(), toAdd.getDocumentoFecha())
-                            && Objects.equals(old.getDelegacion().toUpperCase(), toAdd.getDelegacion().toUpperCase())
-                            ) {
+                            && Objects.equals(old.getDelegacion().toUpperCase(), toAdd.getDelegacion().toUpperCase())) {
                         throw new MessageException("Ya existe un detalle con los mismos datos:"
                                 + "\nTipo de Documento: " + old.getTipoDocumento().getNombre()
                                 + (old.getSubTipoDocumento() == null ? "" : "\nSub-Tipo de Documento: " + old.getSubTipoDocumento().getNombre())
@@ -277,6 +284,7 @@ public class AuditoriaMedicaController extends ArchivoController<AuditoriaMedica
             detalle.getTipoDocumento().getNombre(),
             detalle.getSubTipoDocumento() != null ? detalle.getSubTipoDocumento().getNombre() : null,
             detalle.getNumeroAfiliado(), detalle.getNumeroDocumento(),
+            detalle.getNombreYApellido(),
             fecha,
             detalle.getDelegacion(),
             detalle.getObservacion()
@@ -404,13 +412,13 @@ public class AuditoriaMedicaController extends ArchivoController<AuditoriaMedica
         if (data.get("observaciones").toString().length() > 0) {
             sb.append(" AND upper(o.observacion) like '%").append(data.get("observaciones").toString().toUpperCase()).append("%'");
         }
-        
+
         if (data.get("delegacion") != null && !data.get("delegacion").toString().isEmpty()) {
             //@SuppressWarnings("unchecked")
-           // ComboBoxWrapper<TipoDocumento> cb = (ComboBoxWrapper<TipoDocumento>) data.get("td");
+            // ComboBoxWrapper<TipoDocumento> cb = (ComboBoxWrapper<TipoDocumento>) data.get("td");
             sb.append(" AND upper(o.delegacion) = '").append(data.get("delegacion").toString().toUpperCase()).append("'");
         }
-          
+
         Logger.getLogger(this.getClass()).trace(sb.toString());
         return sb.toString();
     }
@@ -430,8 +438,9 @@ public class AuditoriaMedicaController extends ArchivoController<AuditoriaMedica
                 detalle.getTipoDocumento().getNombre(),
                 detalle.getSubTipoDocumento() != null ? detalle.getSubTipoDocumento().getNombre() : null,
                 detalle.getNumeroAfiliado(), detalle.getNumeroDocumento(),
+                detalle.getNombreYApellido(),
                 fecha,
-                detalle.getDelegacion(),
+                (detalle.getDelegacion() != null) ? detalle.getDelegacion().toUpperCase() : null,
                 detalle.getObservacion(),
                 detalle.getAuditoriaMedica().getBarcode(),
                 detalle.getAuditoriaMedica().getPrecintos().isEmpty() ? "No" : "Si " + detalle.getAuditoriaMedica().getPrecintos().size(),
