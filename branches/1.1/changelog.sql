@@ -1,3 +1,9 @@
+--20150327
+ALTER TABLE auditoriamedicadetalle
+  ADD COLUMN nombre character varying(50);
+ALTER TABLE auditoriamedicadetalle
+  ADD COLUMN apellido character varying(50);
+
 --20150326
 ALTER TABLE auditoriamedicadetalle
   ADD COLUMN delegacion character varying(50);
