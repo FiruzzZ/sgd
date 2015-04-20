@@ -183,7 +183,7 @@ public class AuditoriaMedicaController extends ArchivoController<AuditoriaMedica
         TipoDocumento td;
         SubTipoDocumento std;
         Long numeroAfiliado = null;
-        Integer numeroDocumento = null;
+        Long numeroDocumento = null;
         Date documentoFecha;
         String observacion = null;
         String delegacion = null;
@@ -214,10 +214,10 @@ public class AuditoriaMedicaController extends ArchivoController<AuditoriaMedica
         }
         try {
             if (!data.get("documento").toString().isEmpty()) {
-                numeroDocumento = Integer.valueOf(data.get("documento").toString());
+                numeroDocumento = Long.valueOf(data.get("documento").toString());
             }
         } catch (NumberFormatException numberFormatException) {
-            throw new MessageException("Número de Documento no válido (ingrese solo números o deje vació el campo)");
+            throw new MessageException("DNI/CUIT no válido (ingrese solo números)");
         }
         //como valida
 
