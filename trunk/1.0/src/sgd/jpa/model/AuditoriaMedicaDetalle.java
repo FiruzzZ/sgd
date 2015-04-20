@@ -26,7 +26,7 @@ public class AuditoriaMedicaDetalle implements Serializable {
     private Long numeroAfiliado;
     @Basic(optional = false)
     @Column
-    private Integer numeroDocumento;
+    private Long numeroDocumento;
     @Column
     @Temporal(TemporalType.DATE)
     private Date documentoFecha;
@@ -45,7 +45,7 @@ public class AuditoriaMedicaDetalle implements Serializable {
     public AuditoriaMedicaDetalle() {
     }
 
-    public AuditoriaMedicaDetalle(Integer orderIndex, TipoDocumento tipoDocumento, SubTipoDocumento subTipoDocumento, Long numeroAfiliado, Integer numeroDocumento, Date documentoFecha, String observacion, AuditoriaMedica auditoriaMedica, String delegacion, String nombre, String apellido) {
+    public AuditoriaMedicaDetalle(Integer orderIndex, TipoDocumento tipoDocumento, SubTipoDocumento subTipoDocumento, Long numeroAfiliado, Long numeroDocumento, Date documentoFecha, String observacion, AuditoriaMedica auditoriaMedica, String delegacion, String nombre, String apellido) {
         this.orderIndex = orderIndex;
         this.tipoDocumento = tipoDocumento;
         this.subTipoDocumento = subTipoDocumento;
@@ -67,11 +67,11 @@ public class AuditoriaMedicaDetalle implements Serializable {
         this.auditoriaMedica = auditoriaMedica;
     }
 
-    public Integer getNumeroDocumento() {
+    public Long getNumeroDocumento() {
         return numeroDocumento;
     }
 
-    public void setNumeroDocumento(Integer numeroDocumento) {
+    public void setNumeroDocumento(Long numeroDocumento) {
         this.numeroDocumento = numeroDocumento;
     }
 
