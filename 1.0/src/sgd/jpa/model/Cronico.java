@@ -1,6 +1,7 @@
 package sgd.jpa.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -54,6 +55,8 @@ public class Cronico extends Archivo implements Serializable {
     private Recibo recibo;
 
     public Cronico() {
+        detalle = new ArrayList<>();
+        precintos = new ArrayList<>();
     }
 
     public Integer getId() {

@@ -51,6 +51,7 @@ public abstract class DAO implements Runnable {
             throw new IllegalArgumentException("Archivo de configuración de conexión no válido");
         }
         DAO.properties = p;
+        emf = null;
     }
 
     @Override

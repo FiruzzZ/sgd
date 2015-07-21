@@ -52,6 +52,8 @@ public class Psicofisico extends Archivo implements Serializable {
     private java.sql.Timestamp version;
 
     public Psicofisico() {
+        detalle = new ArrayList<>();
+        precintos = new ArrayList<>();
     }
 
     public Timestamp getVersion() {
